@@ -5,7 +5,7 @@ import { SidebarProvider } from '@/shared/ui/sidebar';
 import { AppSidebar } from '@/widgets/sidebar/ui/sidebar';
 import { cookies } from 'next/headers';
 import { Header } from '@/widgets/header';
-import { ThemeProvider } from '@/features/theme-switcher/ui/theme-provider';
+import { ThemeProvider } from '@/features/theme-switcher';
 
 const SITE_NAME = 'Task Hub';
 
