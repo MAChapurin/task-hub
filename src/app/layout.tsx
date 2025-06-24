@@ -5,6 +5,8 @@ import { SidebarProvider, SidebarTrigger } from "@/shared/ui/sidebar";
 import { AppSidebar } from "@/widgets/sidebar/ui/sidebar";
 import { cookies } from "next/headers";
 
+const SITE_NAME = "Task Hub";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -16,7 +18,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TaskHub project",
+  title: {
+    absolute: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
+  },
   description: "App for tasks",
 };
 

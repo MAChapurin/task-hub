@@ -25,7 +25,7 @@ export function SelectAccount() {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Fruits</SelectLabel>
+          <SelectLabel>Accounts</SelectLabel>
           <SelectItem value="apple">
             <ProfileItem
               src="https://github.com/leerob.png"
