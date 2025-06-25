@@ -7,6 +7,7 @@ import { cookies } from 'next/headers';
 import { Header } from '@/widgets/header';
 import { ThemeProvider } from '@/features/theme-switcher';
 import { THEMES } from '@/features/theme-switcher/constants';
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/shared/ui/resizable';
 
 const SITE_NAME = 'Task Hub';
 
@@ -43,8 +44,21 @@ export default async function RootLayout({
           <SidebarProvider defaultOpen={defaultOpen}>
             <AppSidebar />
             <div className="w-full">
-              <Header />
-              <main className="p-4">{children}</main>
+              <ResizablePanelGroup
+                direction="horizontal"
+                className="min-h-[200px] border md:min-w-[450px]"
+              >
+                <ResizablePanel defaultSize={75}>
+                  <Header />
+                  <main className="p-4">{children}</main>
+                </ResizablePanel>
+                <ResizableHandle withHandle className="hidden lg:flex" />
+                <ResizablePanel defaultSize={25} className="hidden lg:flex">
+                  <div className="flex w-full h-full items-center justify-center p-6 bg-violet-500 bg-[url(/message-bg.jpeg)] bg-top bg-no-repeat bg-contain w-full aspect-[16/9]">
+                    <span className="font-semibold">Messages</span>
+                  </div>
+                </ResizablePanel>
+              </ResizablePanelGroup>
             </div>
           </SidebarProvider>
         </ThemeProvider>
