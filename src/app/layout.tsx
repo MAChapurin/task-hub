@@ -6,6 +6,7 @@ import { AppSidebar } from '@/widgets/sidebar/ui/sidebar';
 import { cookies } from 'next/headers';
 import { Header } from '@/widgets/header';
 import { ThemeProvider } from '@/features/theme-switcher';
+import { THEMES } from '@/features/theme-switcher/constants';
 
 const SITE_NAME = 'Task Hub';
 
@@ -34,10 +35,11 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get('sidebar_state')?.value === 'true';
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem value={THEMES}>
           <SidebarProvider defaultOpen={defaultOpen}>
             <AppSidebar />
             <div className="w-full">

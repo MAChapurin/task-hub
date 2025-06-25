@@ -1,5 +1,15 @@
-export const THEME_VALUES = {
-  LIGHT: 'light',
-  DARK: 'dark',
-  SYSTEM: 'system',
-};
+export const THEMES = {
+  light: 'light',
+  dark: 'dark',
+  green: 'green',
+  red: 'red',
+  blue: 'blue',
+  winter: 'winter',
+  neon: 'neon',
+  cyberpunk: 'cyberpunk',
+  matrix: 'matrix',
+  terminal: 'terminal',
+  umbrella: 'umbrella',
+  purple: 'purple',
+  pink: 'pink',
+} as const;

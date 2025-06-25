@@ -1,37 +1,75 @@
 'use client';
-
-import { Label } from '@/shared/ui/label';
-import { Switch } from '@/shared/ui/switch';
-
-import { Sun, Moon } from 'lucide-react';
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useTheme } from 'next-themes';
-import { THEME_VALUES } from '../constants';
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/shared/ui/dropdown-menu';
+import { Button } from '@/shared/ui/button';
+import { ThemeIcon, ThemeNameType } from './theme-icon';
+import { THEMES } from '../constants';
 
 export const ThemeSwitcher = () => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const id = useId();
-  console.log(theme);
   useEffect(() => {
     setMounted(true);
   }, []);
-  if (!mounted) return <div className="w-[4rem] h-6"></div>;
+  if (!mounted) return <div className="h-5 w-9"></div>;
   return (
-    <div className="flex items-center space-x-2">
-      <Label className="cursor-pointer" htmlFor={id}>
-        <Switch
-          className="cursor-pointer"
-          id={id}
-          onCheckedChange={() => {
-            setTheme((prev) =>
-              prev === THEME_VALUES.LIGHT ? THEME_VALUES.DARK : THEME_VALUES.LIGHT
-            );
-          }}
-        />
-        {theme === THEME_VALUES.DARK ? <Sun /> : <Moon />}
-      </Label>
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="icon">
+          <ThemeIcon name={theme as ThemeNameType} />
+          <span className="sr-only">Переключить тему</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="" align="end">
+        <DropdownMenuItem onClick={() => setTheme(THEMES.light)}>
+          <ThemeIcon name={THEMES.light} /> Светлая тема
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme(THEMES.dark)}>
+          <ThemeIcon name={THEMES.dark} /> Темная тема
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme(THEMES.green)}>
+          <ThemeIcon name={THEMES.green} /> Зеленая тема
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme(THEMES.red)}>
+          <ThemeIcon name={THEMES.red} /> Красная тема
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme(THEMES.blue)}>
+          <ThemeIcon name={THEMES.blue} /> Синяя тема
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme(THEMES.purple)}>
+          <ThemeIcon name={THEMES.purple} />
+          Фиолетовая тема
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme(THEMES.pink)}>
+          <ThemeIcon name={THEMES.pink} /> Розовая тема
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme(THEMES.winter)}>
+          <ThemeIcon name={THEMES.winter} /> Зимняя тема
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme(THEMES.neon)}>
+          <ThemeIcon name={THEMES.neon} /> Неоновая тема
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme(THEMES.cyberpunk)}>
+          <ThemeIcon name={THEMES.cyberpunk} /> Тема Cyberpunk
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme(THEMES.matrix)}>
+          <ThemeIcon name={THEMES.matrix} /> Тема Matrix
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme(THEMES.terminal)}>
+          <ThemeIcon name={THEMES.terminal} /> Тема Terminal
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme(THEMES.umbrella)}>
+          <ThemeIcon name={THEMES.umbrella} /> Тема Biohazard
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
