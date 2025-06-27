@@ -7,13 +7,14 @@ import { Bell } from 'lucide-react';
 export const Header = () => {
   return (
     <header className="flex gap-4 items-center p-4">
-      <SidebarTrigger />
-      <ThemeSwitcher />
-      <h1 className="mr-auto">Dashboard</h1>
+      <h1 className="font-semibold text-4xl">Dashboard</h1>
+      <div className="ml-auto"></div>
       <FormSearch />
       <Button size={'icon'} variant={'outline'} className="">
         <Bell />
       </Button>
+      <ThemeSwitcher />
+      <SidebarTrigger />
     </header>
   );
 };

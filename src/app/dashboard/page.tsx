@@ -1,4 +1,5 @@
 import { Stats } from '@/shared/ui/stats';
+import { ProjectsStatistic } from '@/widgets/projects-statistic/ui/projects-statistic';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function DashboardPage() {
   return (
-    <div className="flex gap-4 flex-wrap">
+    <div className="flex gap-4 flex-col lg:flex-row">
       <div className="flex flex-col gap-4 items-stretch w-full max-w-full lg:max-w-2xs">
         <Stats
           title="Active Projects"
@@ -29,7 +30,9 @@ export default function DashboardPage() {
           backgroundColor="bg-pink-200"
         />
       </div>
-      <div className="bg-violet-300 rounded-2xl min-w-2xs grow min-h-96"></div>
+      <div className="rounded-2xl min-w-2xs grow">
+        <ProjectsStatistic />
+      </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Poppins } from 'next/font/google';
 import './globals.css';
 import { SidebarProvider } from '@/shared/ui/sidebar';
 import { AppSidebar } from '@/widgets/sidebar/ui/sidebar';
@@ -11,14 +11,10 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/shared/u
 
 const SITE_NAME = 'Task Hub';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const poppins = Poppins({
   subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-main',
 });
 
 export const metadata: Metadata = {
@@ -39,7 +35,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${poppins.className} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem value={THEMES}>
           <SidebarProvider defaultOpen={defaultOpen}>
             <AppSidebar />
@@ -54,7 +50,7 @@ export default async function RootLayout({
                 </ResizablePanel>
                 <ResizableHandle withHandle className="hidden lg:flex" />
                 <ResizablePanel defaultSize={25} className="hidden lg:flex">
-                  <div className="flex w-full h-full items-center justify-center p-6 bg-violet-500 bg-[url(/message-bg.jpeg)] bg-top bg-no-repeat bg-contain w-full aspect-[16/9]">
+                  <div className="flex h-full items-center justify-center p-6 bg-chart-1 bg-[url(/message-bg.jpeg)] bg-top bg-no-repeat bg-contain w-full aspect-[16/9]">
                     <span className="font-semibold">Messages</span>
                   </div>
                 </ResizablePanel>
