@@ -2,12 +2,13 @@ import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import './globals.css';
 import { SidebarProvider } from '@/shared/ui/sidebar';
-import { AppSidebar } from '@/widgets/sidebar/ui/sidebar';
+
 import { cookies } from 'next/headers';
-import { Header } from '@/widgets/header';
+
 import { ThemeProvider } from '@/features/theme-switcher';
 import { THEMES } from '@/features/theme-switcher/constants';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/shared/ui/resizable';
+import { AppSidebar, Header } from '@/widgets';
 
 const SITE_NAME = 'Task Hub';
 
