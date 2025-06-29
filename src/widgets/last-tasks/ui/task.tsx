@@ -12,6 +12,7 @@ import { Plane, MessageSquareText, BookImage, Link, Plus, Pencil } from 'lucide-
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 import { Progress } from './progress';
 import { Button } from '@/shared/ui/button';
+import { cn } from '@/shared/lib/css';
 
 export const Task = ({
   progress,
@@ -67,8 +68,12 @@ export const Task = ({
           </Button>
         </div>
         <div className="flex items-center gap-2">
-          <Button className="w-12 h-12 rounded-full" variant="outline" size="sm">
-            <Plus />
+          <Button
+            className={cn('w-12 h-12 rounded-full', progressBackground)}
+            variant="outline"
+            size="sm"
+          >
+            <Plus className="text-background" />
           </Button>
           <Button className="w-12 h-12 rounded-full" variant="outline" size="sm">
             <Pencil />

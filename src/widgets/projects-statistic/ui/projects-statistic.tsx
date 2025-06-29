@@ -51,7 +51,7 @@ export function ProjectsStatistic() {
   const data = period === 'year' ? monthlyData : dailyData;
 
   return (
-    <Card className="h-full border-0">
+    <Card className="h-full w-full border-0">
       <CardHeader className="mb-2 flex items-center justify-between">
         <h3 className="text-left text-2xl font-semibold text-[var(--foreground)]">
           Projects Statistic

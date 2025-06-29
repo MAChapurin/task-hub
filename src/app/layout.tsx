@@ -49,8 +49,8 @@ export default async function RootLayout({
                   <Header />
                   <main className="p-4">{children}</main>
                 </ResizablePanel>
-                <ResizableHandle withHandle className="hidden lg:flex" />
-                <ResizablePanel defaultSize={25} className="hidden lg:flex">
+                <ResizableHandle withHandle className="hidden xl:flex" />
+                <ResizablePanel defaultSize={25} className="hidden xl:flex">
                   <div className="flex h-full items-center justify-center p-6 bg-violet-400 bg-[url(/message-bg.jpeg)] bg-top bg-no-repeat bg-contain w-full aspect-[16/9]">
                     <span className="font-semibold">Messages</span>
                   </div>

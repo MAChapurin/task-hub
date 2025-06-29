@@ -6,7 +6,7 @@ export const LastTasks = () => {
       <h2 className="mb-4">
         Last tasks <span className="text-[var(--muted-foreground)]">(3)</span>
       </h2>
-      <ul className="grid grid-cols-3 gap-4">
+      <ul className="flex flex-col xl:grid xl:grid-cols-3 gap-4">
         <li>
           <Task progress={52} progressBackground={'bg-chart-1'} />
         </li>

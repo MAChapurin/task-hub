@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 export default function DashboardPage() {
   return (
     <>
-      <div className="flex flex-wrap lg:grid lg:grid-cols-3 gap-4 mb-4">
-        <div className="flex flex-col gap-4 items-stretch w-full max-w-full">
+      <div className="flex flex-wrap xl:grid xl:grid-cols-3 gap-4 mb-4">
+        <section className="flex flex-col gap-4 items-stretch w-full max-w-full">
           <Stats
             title="Active Projects"
             stats="92"
@@ -32,10 +32,10 @@ export default function DashboardPage() {
             src="/project-stats-icons/working-hours.svg"
             backgroundColor="bg-[var(--chart-3)]"
           />
-        </div>
-        <div className="col-span-2 h-105">
+        </section>
+        <section className="xl:col-span-2 min-h-105 w-full">
           <ProjectsStatistic />
-        </div>
+        </section>
       </div>
       <LastTasks />
     </>

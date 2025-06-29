@@ -14,7 +14,7 @@ export const Stats = ({
   backgroundColor: string;
 }) => {
   return (
-    <Card className={cn('min-w-2xs w-full rounded-2xl p-0 border-0', backgroundColor)}>
+    <Card className={cn('w-full rounded-2xl p-0 border-0', backgroundColor)}>
       <CardContent className="p-4 flex items-center justify-between">
         <div className="flex flex-col gap-2">
           <p className="font-bold text-4xl">{stats}</p>
