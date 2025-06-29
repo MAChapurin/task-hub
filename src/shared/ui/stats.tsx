@@ -20,7 +20,7 @@ export const Stats = ({
           <p className="font-bold text-4xl">{stats}</p>
           <h3 className="text-base font-semibold">{title}</h3>
         </div>
-        <div className="min-w-min">
+        <div className="">
           <Image src={src} alt={title} title={title} width={100} height={100} />
         </div>
       </CardContent>

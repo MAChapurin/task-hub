@@ -25,18 +25,18 @@ export const Task = ({
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-4">
             <div className="w-10 h-10 rounded-full bg-violet-200 flex flex-col items-center justify-center text-violet-600 shrink-0">
               <Plane />
             </div>
             <div>
               <CardTitle className="font-semibold text-2xl text-balance">
-                Travel App User Flow
+                Travel App <br /> User Flow
               </CardTitle>
               <CardDescription>Due: 3 days</CardDescription>
             </div>
           </div>
-          <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
+          <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale mb-auto">
             <Avatar>
               <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
@@ -55,7 +55,7 @@ export const Task = ({
       <CardContent>
         <Progress value={progress} background={progressBackground} />
       </CardContent>
-      <CardFooter className="flex items-center justify-between">
+      <CardFooter className="flex items-center justify-between flex-wrap">
         <div className="flex items-center gap-2">
           <Button size={'icon'} variant={'ghost'}>
             <MessageSquareText className="text-muted-foreground" /> 3
@@ -67,7 +67,7 @@ export const Task = ({
             <Link className="text-muted-foreground" /> 3
           </Button>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 ml-auto">
           <Button
             className={cn('w-12 h-12 rounded-full', progressBackground)}
             variant="outline"

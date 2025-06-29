@@ -1,6 +1,6 @@
 'use client';
 
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts';
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import { Card, CardContent, CardHeader } from '@/shared/ui/card';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/shared/ui/chart';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select';
@@ -40,7 +40,7 @@ const dailyData = [
 
 const chartConfig = {
   desktop: {
-    label: 'projects',
+    // label: 'projects',
     color: 'var(--chart-1)',
   },
 } satisfies ChartConfig;
@@ -66,8 +66,42 @@ export function ProjectsStatistic() {
           </SelectContent>
         </Select>
       </CardHeader>
-
       <CardContent className="overflow-hidden">
+        <ChartContainer config={chartConfig} className="w-full h-[300px]">
+          <ResponsiveContainer width="100%" height={300}>
+            <AreaChart data={data}>
+              <CartesianGrid vertical={false} />
+              <YAxis
+                width={30}
+                tick={{ fill: 'var(--foreground)' }}
+                axisLine={{ stroke: 'var(--muted)' }}
+                type="number"
+                domain={[0, 50]}
+                tickCount={6}
+                tickLine={false}
+              />
+              <XAxis
+                dataKey="period"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                tickFormatter={(value) => (period === 'year' ? value.slice(0, 3) : value)}
+                tick={{ fill: 'var(--foreground)' }}
+              />
+              <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
+              <Area
+                dataKey="projects"
+                type="natural"
+                fill="var(--chart-1)"
+                fillOpacity={0.4}
+                stroke="var(--chart-1)"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </ChartContainer>
+      </CardContent>
+
+      {/* <CardContent className="overflow-hidden">
         <ChartContainer config={chartConfig} className="w-full h-[300px]">
           <AreaChart width={undefined} height={300} data={data}>
             <CartesianGrid vertical={false} />
@@ -98,7 +132,7 @@ export function ProjectsStatistic() {
             />
           </AreaChart>
         </ChartContainer>
-      </CardContent>
+      </CardContent> */}
     </Card>
   );
 }
