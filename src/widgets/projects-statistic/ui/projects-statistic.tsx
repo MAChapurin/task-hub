@@ -40,7 +40,7 @@ const dailyData = [
 
 const chartConfig = {
   desktop: {
-    // label: 'projects',
+    label: 'projects',
     color: 'var(--chart-1)',
   },
 } satisfies ChartConfig;
@@ -68,11 +68,11 @@ export function ProjectsStatistic() {
       </CardHeader>
       <CardContent className="overflow-hidden">
         <ChartContainer config={chartConfig} className="w-full h-[300px]">
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%">
             <AreaChart data={data}>
               <CartesianGrid vertical={false} />
               <YAxis
-                width={30}
+                width={20}
                 tick={{ fill: 'var(--foreground)' }}
                 axisLine={{ stroke: 'var(--muted)' }}
                 type="number"
@@ -88,7 +88,17 @@ export function ProjectsStatistic() {
                 tickFormatter={(value) => (period === 'year' ? value.slice(0, 3) : value)}
                 tick={{ fill: 'var(--foreground)' }}
               />
-              <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
+              <ChartTooltip
+                cursor={true}
+                content={
+                  <ChartTooltipContent
+                    indicator="line"
+                    className="bg-chart-1 text-white [&_*]:text-white"
+                    hideIndicator
+                    hideLabel
+                  />
+                }
+              />
               <Area
                 dataKey="projects"
                 type="natural"
