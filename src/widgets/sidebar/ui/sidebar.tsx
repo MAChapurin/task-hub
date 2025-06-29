@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Sidebar,
@@ -9,12 +9,12 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/shared/ui/sidebar";
+} from '@/shared/ui/sidebar';
 
-import Link from "next/link";
+import Link from 'next/link';
 
-import { MAIN_MENU, projects } from "../config";
-import { SelectAccount } from "@/features/select-account";
+import { MAIN_MENU, projects } from '../config';
+import { SelectAccount } from '@/features/select-account';
 
 export function AppSidebar() {
   return (
@@ -51,10 +51,7 @@ export function AppSidebar() {
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <Link href={item.url}>
-                      <div
-                        className="w-2 h-2"
-                        style={{ background: item.color }}
-                      />
+                      <div className="w-2 h-2" style={{ background: item.color }} />
                       <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>

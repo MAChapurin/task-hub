@@ -7,7 +7,7 @@ import { cookies } from 'next/headers';
 
 import { ThemeProvider } from '@/features/theme-switcher';
 import { THEMES } from '@/features/theme-switcher/constants';
-import { AppSidebar, Header } from '@/widgets';
+import { AppSidebar, AsidePanel, Header } from '@/widgets';
 
 const SITE_NAME = 'Task Hub';
 
@@ -45,11 +45,12 @@ export default async function RootLayout({
                   <Header />
                   <main className="p-4">{children}</main>
                 </div>
-                <aside className="hidden xl:block w-80 shrink-0 h-screen">
+                {/* <aside className="hidden xl:block w-80 shrink-0 h-screen">
                   <div className="flex h-full items-center justify-center p-6 bg-violet-400 bg-[url(/message-bg.jpeg)] bg-top bg-no-repeat bg-contain w-full aspect-[16/9]">
                     <span className="font-semibold">Messages</span>
                   </div>
-                </aside>
+                </aside> */}
+                <AsidePanel />
               </div>
             </div>
           </SidebarProvider>
