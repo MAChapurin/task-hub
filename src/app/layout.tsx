@@ -40,8 +40,8 @@ export default async function RootLayout({
           <SidebarProvider defaultOpen={defaultOpen}>
             <AppSidebar />
             <div className="w-full">
-              <div className="flex">
-                <div className="grow">
+              <div className="xl:flex">
+                <div className="md:grow">
                   <Header />
                   <main className="p-4">{children}</main>
                 </div>
