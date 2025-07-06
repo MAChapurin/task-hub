@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from '@/shared/ui/card';
 
-import { Plane, MessageSquareText, BookImage, Link, Plus, Pencil } from 'lucide-react';
+import { Plane, MessageSquareText, BookImage, Link, Plus } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 import { Progress } from './progress';
@@ -16,6 +16,7 @@ import { cn } from '@/shared/lib/css';
 import { FC } from 'react';
 import { ITask } from '../types';
 import { getDaysPassed } from '../utils/getDaysPassed';
+import { EditTaskDialog } from './edit-task';
 
 export const Task: FC<ITask> = ({ progress, title, dueDate, users }) => {
   return (
@@ -65,9 +66,7 @@ export const Task: FC<ITask> = ({ progress, title, dueDate, users }) => {
           <Button className={cn('w-12 h-12 rounded-full bg-chart-1')} variant="outline" size="sm">
             <Plus className="text-background" />
           </Button>
-          <Button className="w-12 h-12 rounded-full" variant="outline" size="sm">
-            <Pencil />
-          </Button>
+          <EditTaskDialog />
         </div>
       </CardFooter>
     </Card>
