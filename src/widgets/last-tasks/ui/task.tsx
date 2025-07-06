@@ -13,66 +13,56 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 import { Progress } from './progress';
 import { Button } from '@/shared/ui/button';
 import { cn } from '@/shared/lib/css';
+import { FC } from 'react';
+import { ITask } from '../types';
+import { getDaysPassed } from '../utils/getDaysPassed';
 
-export const Task = ({
-  progress,
-  progressBackground,
-}: {
-  progress: number;
-  progressBackground?: string;
-}) => {
+export const Task: FC<ITask> = ({ progress, title, dueDate, users }) => {
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <div className="flex flex-wrap items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-violet-200 flex flex-col items-center justify-center text-violet-600 shrink-0">
+        <div className="flex flex-col w-full max-w-full">
+          <div className="w-full flex items-center justify-between gap-4">
+            <div className="w-10 h-10 rounded-full bg-violet-200 flex items-center justify-center text-violet-600 shrink-0">
               <Plane />
             </div>
-            <div>
-              <CardTitle className="font-semibold text-2xl text-balance">
-                Travel App <br /> User Flow
-              </CardTitle>
-              <CardDescription>Due: 3 days</CardDescription>
+            <div className="flex -space-x-2 mb-auto *:data-[slot=avatar]:ring-background *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
+              {users.map((user) => (
+                <Avatar key={user.id}>
+                  <AvatarImage src={user.avatarUrl} alt={user.name} />
+                  <AvatarFallback>{user.name[0]}</AvatarFallback>
+                </Avatar>
+              ))}
             </div>
           </div>
-          <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale mb-auto">
-            <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-            <Avatar>
-              <AvatarImage src="https://github.com/leerob.png" alt="@leerob" />
-              <AvatarFallback>LR</AvatarFallback>
-            </Avatar>
-            <Avatar>
-              <AvatarImage src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
-              <AvatarFallback>ER</AvatarFallback>
-            </Avatar>
+          <div className="w-full max-w-full mt-2">
+            <CardTitle
+              className="font-semibold text-2xl w-full max-w-full text-balance"
+              title={title}
+            >
+              {title}
+            </CardTitle>
+            <CardDescription>Due: {getDaysPassed(dueDate)} days</CardDescription>
           </div>
         </div>
       </CardHeader>
       <CardContent>
-        <Progress value={progress} background={progressBackground} />
+        <Progress value={progress} />
       </CardContent>
       <CardFooter className="flex items-center justify-between flex-wrap">
         <div className="flex items-center gap-2">
-          <Button size={'icon'} variant={'ghost'}>
+          <Button size="icon" variant="ghost">
             <MessageSquareText className="text-muted-foreground" /> 3
           </Button>
-          <Button size={'icon'} variant={'ghost'}>
+          <Button size="icon" variant="ghost">
             <BookImage className="text-muted-foreground" /> 6
           </Button>
-          <Button size={'icon'} variant={'ghost'}>
+          <Button size="icon" variant="ghost">
             <Link className="text-muted-foreground" /> 3
           </Button>
         </div>
         <div className="flex items-center gap-2 ml-auto">
-          <Button
-            className={cn('w-12 h-12 rounded-full', progressBackground)}
-            variant="outline"
-            size="sm"
-          >
+          <Button className={cn('w-12 h-12 rounded-full')} variant="outline" size="sm">
             <Plus className="text-background" />
           </Button>
           <Button className="w-12 h-12 rounded-full" variant="outline" size="sm">
