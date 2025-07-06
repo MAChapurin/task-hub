@@ -62,7 +62,7 @@ export const Task: FC<ITask> = ({ progress, title, dueDate, users }) => {
           </Button>
         </div>
         <div className="flex items-center gap-2 ml-auto">
-          <Button className={cn('w-12 h-12 rounded-full')} variant="outline" size="sm">
+          <Button className={cn('w-12 h-12 rounded-full bg-chart-1')} variant="outline" size="sm">
             <Plus className="text-background" />
           </Button>
           <Button className="w-12 h-12 rounded-full" variant="outline" size="sm">

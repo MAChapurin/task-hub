@@ -1,7 +1,10 @@
+'use client';
+import { useState } from 'react';
 import { tasks } from '../mock';
 import { Task } from './task';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select';
 
 const TAB_VALUES = {
   ALL: 'all',
@@ -10,50 +13,85 @@ const TAB_VALUES = {
   DONE: 'done',
 } as const;
 
-const TAB_LABELS: Record<string, string> = {
-  [TAB_VALUES.ALL]: 'All',
-  [TAB_VALUES.PENDING]: 'Backlog',
-  [TAB_VALUES.PROGRESS]: 'In progress',
-  [TAB_VALUES.DONE]: 'Done',
-};
+type SortOrder = 'asc' | 'desc';
+
+const sortByProgress = (list: typeof tasks, order: SortOrder) =>
+  [...list].sort((a, b) => (order === 'asc' ? a.progress - b.progress : b.progress - a.progress));
 
 export function LastTasks() {
-  const filteredTasks = {
-    [TAB_VALUES.ALL]: tasks,
-    [TAB_VALUES.PENDING]: tasks.filter((task) => task.status === 'pending'),
-    [TAB_VALUES.PROGRESS]: tasks.filter((task) => task.status === 'in progress'),
-    [TAB_VALUES.DONE]: tasks.filter((task) => task.status === 'done'),
+  const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
+
+  const getSortedTasks = (status?: string) => {
+    const filtered = status ? tasks.filter((task) => task.status === status) : tasks;
+    return sortByProgress(filtered, sortOrder);
   };
 
   return (
-    <section className="flex w-full flex-col">
-      <h2 className="mb-4">
-        Last tasks{' '}
-        <span className="text-[var(--muted-foreground)]">({filteredTasks.all.length})</span>
-      </h2>
-      <Tabs defaultValue={TAB_VALUES.ALL}>
-        <TabsList className="ml-auto">
-          {Object.entries(TAB_LABELS).map(([key, label]) => (
-            <TabsTrigger key={key} value={key}>
-              {label}{' '}
-              <span className="text-[var(--muted-foreground)]">
-                ({filteredTasks[key as keyof typeof filteredTasks].length})
-              </span>
-            </TabsTrigger>
-          ))}
-        </TabsList>
+    <section className="flex w-full flex-col gap-4">
+      <div className="flex items-center justify-between gap-4 flex-wrap">
+        <h2 className="text-lg font-semibold">
+          Last tasks <span className="text-muted-foreground">({tasks.length})</span>
+        </h2>
+      </div>
 
-        {Object.entries(filteredTasks).map(([key, taskList]) => (
-          <TabsContent key={key} value={key}>
-            <ul className="flex flex-col xl:grid xl:grid-cols-3 gap-4">
-              {taskList.map((task) => (
-                <li key={task.id}>
-                  <Task {...task} />
-                </li>
-              ))}
-            </ul>
-          </TabsContent>
-        ))}
+      <Tabs defaultValue={TAB_VALUES.ALL}>
+        <div className="flex items-center justify-end gap-4">
+          <Select value={sortOrder} onValueChange={(val) => setSortOrder(val as SortOrder)}>
+            <SelectTrigger className="w-[150px]">
+              <SelectValue placeholder="Sort by" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="asc">Progress: Low → High</SelectItem>
+              <SelectItem value="desc">Progress: High → Low</SelectItem>
+            </SelectContent>
+          </Select>
+          <TabsList className="">
+            <TabsTrigger value={TAB_VALUES.ALL}>All</TabsTrigger>
+            <TabsTrigger value={TAB_VALUES.PENDING}>Backlog</TabsTrigger>
+            <TabsTrigger value={TAB_VALUES.PROGRESS}>In progress</TabsTrigger>
+            <TabsTrigger value={TAB_VALUES.DONE}>Done</TabsTrigger>
+          </TabsList>
+        </div>
+
+        <TabsContent value={TAB_VALUES.ALL}>
+          <ul className="flex flex-col xl:grid xl:grid-cols-3 gap-4">
+            {getSortedTasks().map((task) => (
+              <li key={task.id}>
+                <Task {...task} />
+              </li>
+            ))}
+          </ul>
+        </TabsContent>
+
+        <TabsContent value={TAB_VALUES.PENDING}>
+          <ul className="flex flex-col xl:grid xl:grid-cols-3 gap-4">
+            {getSortedTasks('pending').map((task) => (
+              <li key={task.id}>
+                <Task {...task} />
+              </li>
+            ))}
+          </ul>
+        </TabsContent>
+
+        <TabsContent value={TAB_VALUES.PROGRESS}>
+          <ul className="flex flex-col xl:grid xl:grid-cols-3 gap-4">
+            {getSortedTasks('in progress').map((task) => (
+              <li key={task.id}>
+                <Task {...task} />
+              </li>
+            ))}
+          </ul>
+        </TabsContent>
+
+        <TabsContent value={TAB_VALUES.DONE}>
+          <ul className="flex flex-col xl:grid xl:grid-cols-3 gap-4">
+            {getSortedTasks('done').map((task) => (
+              <li key={task.id}>
+                <Task {...task} />
+              </li>
+            ))}
+          </ul>
+        </TabsContent>
       </Tabs>
     </section>
   );
