@@ -1,4 +1,3 @@
-import { cn } from '@/shared/lib/css';
 import { Button } from '@/shared/ui/button';
 import {
   Dialog,
