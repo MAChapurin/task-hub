@@ -14,11 +14,13 @@ import { Progress } from './progress';
 import { Button } from '@/shared/ui/button';
 import { cn } from '@/shared/lib/css';
 import { FC } from 'react';
-import { ITask } from '../types';
-import { getDaysPassed } from '../utils/getDaysPassed';
-import { EditTaskDialog } from './edit-task';
 
-export const Task: FC<ITask> = ({ progress, title, dueDate, users }) => {
+import { EditTaskDialog } from '@/features/edit-task';
+import { ITask } from '@/entities';
+import { getDaysUntil } from '../utils/getDaysUntil';
+
+export const Task: FC<ITask> = ({ progress, title, dueDate, users, id }) => {
+  const restDay = getDaysUntil(dueDate);
   return (
     <Card>
       <CardHeader>
@@ -43,7 +45,9 @@ export const Task: FC<ITask> = ({ progress, title, dueDate, users }) => {
             >
               {title}
             </CardTitle>
-            <CardDescription>Due: {getDaysPassed(dueDate)} days</CardDescription>
+            <CardDescription>
+              Due: {restDay} {restDay === 1 ? 'day' : 'days'}
+            </CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -66,7 +70,7 @@ export const Task: FC<ITask> = ({ progress, title, dueDate, users }) => {
           <Button className={cn('w-12 h-12 rounded-full bg-chart-1')} variant="outline" size="sm">
             <Plus className="text-background" />
           </Button>
-          <EditTaskDialog />
+          <EditTaskDialog taskId={id} />
         </div>
       </CardFooter>
     </Card>

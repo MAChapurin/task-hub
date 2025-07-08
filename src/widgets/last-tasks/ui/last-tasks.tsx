@@ -1,10 +1,11 @@
 'use client';
 import { useState } from 'react';
-import { tasks } from '../mock';
+
 import { Task } from './task';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select';
+import { useTaskStore, ITask } from '@/entities';
 
 const TAB_VALUES = {
   ALL: 'all',
@@ -15,10 +16,11 @@ const TAB_VALUES = {
 
 type SortOrder = 'asc' | 'desc';
 
-const sortByProgress = (list: typeof tasks, order: SortOrder) =>
+const sortByProgress = (list: ITask[], order: SortOrder) =>
   [...list].sort((a, b) => (order === 'asc' ? a.progress - b.progress : b.progress - a.progress));
 
 export function LastTasks() {
+  const tasks = useTaskStore((state) => state.tasks);
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
 
   const getSortedTasks = (status?: string) => {
