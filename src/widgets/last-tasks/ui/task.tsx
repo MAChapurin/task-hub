@@ -7,20 +7,19 @@ import {
   CardTitle,
 } from '@/shared/ui/card';
 
-import { Plane, MessageSquareText, BookImage, Link, Plus } from 'lucide-react';
+import { Plane, MessageSquareText, BookImage, Link } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 import { Progress } from './progress';
 import { Button } from '@/shared/ui/button';
-import { cn } from '@/shared/lib/css';
 import { FC } from 'react';
 
 import { EditTaskDialog } from '@/features/edit-task';
 import { ITask } from '@/entities';
-import { getDaysUntil } from '../utils/getDaysUntil';
+import { DayCounter } from './day-counter';
+import { AddSubTaskDialog } from '@/features/add-subtask/ui/add-subtask';
 
 export const Task: FC<ITask> = ({ progress, title, dueDate, users, id }) => {
-  const restDay = getDaysUntil(dueDate);
   return (
     <Card>
       <CardHeader>
@@ -46,7 +45,7 @@ export const Task: FC<ITask> = ({ progress, title, dueDate, users, id }) => {
               {title}
             </CardTitle>
             <CardDescription>
-              Due: {restDay} {restDay === 1 ? 'day' : 'days'}
+              <DayCounter dueDate={dueDate} />
             </CardDescription>
           </div>
         </div>
@@ -67,9 +66,7 @@ export const Task: FC<ITask> = ({ progress, title, dueDate, users, id }) => {
           </Button>
         </div>
         <div className="flex items-center gap-2 ml-auto">
-          <Button className={cn('w-12 h-12 rounded-full bg-chart-1')} variant="outline" size="sm">
-            <Plus className="text-background" />
-          </Button>
+          <AddSubTaskDialog taskId={id} />
           <EditTaskDialog taskId={id} />
         </div>
       </CardFooter>

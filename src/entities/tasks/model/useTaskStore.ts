@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist, devtools } from 'zustand/middleware';
-import { ITask } from '../types/tasks.types';
+import { ISubTask, ITask } from '../types/tasks.types';
 import { tasks as initialTasks } from '../mock';
 
 interface TaskStore {
@@ -10,6 +10,7 @@ interface TaskStore {
   deleteTask: (id: string) => void;
   getTaskById: (id: string) => ITask | undefined;
   resetTasks: () => void;
+  addSubTask: (taskId: string, subTask: ISubTask) => void;
 }
 
 export const useTaskStore = create<TaskStore>()(
@@ -50,6 +51,17 @@ export const useTaskStore = create<TaskStore>()(
         },
 
         resetTasks: () => set({ tasks: initialTasks }, false, 'resetTasks'),
+
+        addSubTask: (taskId, subTask) =>
+          set(
+            (state) => ({
+              tasks: state.tasks.map((task) =>
+                task.id === taskId ? { ...task, subtasks: [...task.subtasks, subTask] } : task
+              ),
+            }),
+            false,
+            'addSubTask'
+          ),
       }),
       {
         name: 'task-storage',

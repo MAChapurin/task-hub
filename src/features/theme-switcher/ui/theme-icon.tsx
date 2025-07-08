@@ -39,5 +39,6 @@ interface IconProps extends SVGProps<SVGSVGElement> {
 
 export const ThemeIcon: FC<IconProps> = ({ name = 'light', ...props }) => {
   const SVGIcon = config[name];
+  if (!SVGIcon) return <Sun {...props} />;
   return <SVGIcon {...props} />;
 };

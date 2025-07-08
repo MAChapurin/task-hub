@@ -1,5 +1,8 @@
+'use client';
+
 import { useState } from 'react';
-import { Pencil } from 'lucide-react';
+import { Plus } from 'lucide-react';
+import { nanoid } from 'nanoid';
 
 import { useTaskStore } from '@/entities';
 import { Button } from '@/shared/ui/button';
@@ -14,70 +17,68 @@ import {
 } from '@/shared/ui/dialog';
 import { Input } from '@/shared/ui/input';
 import { Label } from '@/shared/ui/label';
-import { DeadlineDatePicker } from './date-picker';
 import { toast } from 'sonner';
+import { cn } from '@/shared/lib/css';
 
-export function EditTaskDialog({ taskId }: { taskId: string }) {
+export function AddSubTaskDialog({ taskId }: { taskId: string }) {
   const task = useTaskStore((state) => state.getTaskById(taskId));
-  const updateTask = useTaskStore((state) => state.updateTask);
+  const addSubTask = useTaskStore((state) => state.addSubTask);
 
   const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState(task?.title ?? '');
-  const [dueDate, setDueDate] = useState<Date | null>(task?.dueDate ?? null);
+  const [subtaskTitle, setSubtaskTitle] = useState('');
 
   const onSave = () => {
-    if (!task) return;
+    if (!task || !subtaskTitle.trim()) return;
 
-    updateTask(taskId, {
-      title,
-      dueDate: dueDate ?? task.dueDate,
+    addSubTask(taskId, {
+      id: nanoid(),
+      title: subtaskTitle.trim(),
     });
 
-    toast(`Task "${title}" successfully updated`, {
+    toast(`Subtask added to "${task.title}"`, {
       icon: '✅',
       className: 'bg-green-600 text-white border-none',
     });
 
+    setSubtaskTitle('');
     setOpen(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-12 h-12 rounded-full" variant="outline" size="sm">
-          <Pencil />
+        <Button className={cn('w-12 h-12 rounded-full bg-chart-1')} variant="outline" size="sm">
+          <Plus className="text-background" />
         </Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit Task</DialogTitle>
+          <DialogTitle>Add subtask to: {task?.title}</DialogTitle>
           <DialogDescription>
-            Make changes to your task here. Click save when you&apos;re done.
+            Enter the subtask title. Click save to add it to this task.
           </DialogDescription>
         </DialogHeader>
 
         <div className="grid gap-4">
           <div className="grid gap-3">
-            <Label htmlFor="title">Title</Label>
+            <Label htmlFor="subtask-title">Subtask Title</Label>
             <Input
-              id="title"
-              name="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              id="subtask-title"
+              name="subtask-title"
+              value={subtaskTitle}
+              onChange={(e) => setSubtaskTitle(e.target.value)}
+              placeholder="e.g. Create wireframes"
             />
           </div>
-
-          <div className="grid gap-3">
-            <DeadlineDatePicker date={dueDate} setDate={setDueDate} />
-          </div>
         </div>
+
         <DialogFooter>
           <Button variant="outline" onClick={() => setOpen(false)}>
             Cancel
           </Button>
-          <Button type="button" onClick={onSave}>
-            Save changes
+          <Button type="button" onClick={onSave} disabled={!subtaskTitle.trim()}>
+            Save Subtask
           </Button>
         </DialogFooter>
       </DialogContent>
