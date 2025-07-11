@@ -1,8 +1,8 @@
-import { Metadata } from "next";
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Report",
-  description: "Report page",
+  title: 'Report',
+  description: 'Report page',
 };
 
 export default function ReportPage() {

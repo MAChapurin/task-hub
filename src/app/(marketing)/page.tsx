@@ -1,28 +1,16 @@
-import { ThemeSwitcherShort } from '@/features/theme-switcher';
+import { HeaderMarketing } from '@/widgets';
+import { AboutSection } from '@/widgets/about-section';
 import { FAQAccordionSection } from '@/widgets/faq-section';
 import { FeaturesSrction } from '@/widgets/features-section';
 import { HeroSection } from '@/widgets/hero/ui/hero';
-import { HowItWorkSection } from '@/widgets/how-it-work-section';
-import Link from 'next/link';
 
 export default function HomePage() {
   return (
     <>
-      <header className="w-screen fixed z-100 top-0 left-0 flex items-center justify-center">
-        <div className="w-full max-w-400 flex items-center justify-between p-4">
-          <div>LOGO</div>
-          <nav className="flex gap-2">
-            <Link href={'#main'}>Main</Link>
-            <Link href={'#about'}>About</Link>
-            <Link href={'#features'}>Features</Link>
-            <Link href={'#faq'}>FAQ</Link>
-          </nav>
-          <ThemeSwitcherShort />
-        </div>
-      </header>
-      <main className="min-h-screen w-full max-w-400 flex flex-col items-center justify-center p-4 mx-auto scroll-smooth">
+      <HeaderMarketing />
+      <main className="min-h-screen w-full max-w-400 flex flex-col items-center justify-center  p-2 md:p-4 mx-auto scroll-smooth">
         <HeroSection />
-        <HowItWorkSection />
+        <AboutSection />
         <FeaturesSrction />
         <FAQAccordionSection multiple />
       </main>

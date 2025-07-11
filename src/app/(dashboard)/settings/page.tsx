@@ -1,8 +1,8 @@
-import { Metadata } from "next";
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Setting",
-  description: "Setting page",
+  title: 'Setting',
+  description: 'Setting page',
 };
 
 export default function SettingPage() {

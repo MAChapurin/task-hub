@@ -1,9 +1,9 @@
-import { Avatar, AvatarImage } from "@/shared/ui/avatar";
-import { AvatarFallback } from "@radix-ui/react-avatar";
+import { Avatar, AvatarImage } from '@/shared/ui/avatar';
+import { AvatarFallback } from '@radix-ui/react-avatar';
 
 export function ProfileItem({
-  src = "https://github.com/shadcn.png",
-  fallback = "CN",
+  src = 'https://github.com/shadcn.png',
+  fallback = 'CN',
   name,
   mail,
 }: {

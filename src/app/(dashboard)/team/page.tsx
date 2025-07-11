@@ -1,8 +1,8 @@
-import { Metadata } from "next";
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Team",
-  description: "Team page",
+  title: 'Team',
+  description: 'Team page',
 };
 
 export default function TeamPage() {

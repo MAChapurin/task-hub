@@ -1,1 +1,1 @@
-export * from './ui/select-account'
+export * from './ui/select-account';

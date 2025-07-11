@@ -85,9 +85,9 @@ const data = [
   },
 ];
 
-export function HowItWorkSection() {
+export function AboutSection() {
   return (
-    <div className="relative w-full overflow-clip">
+    <div id="about" className="relative w-full overflow-clip pt-16">
       <h2 className="text-4xl text-center font-bold mb-4 text-black dark:text-white">
         Как это работает ?
       </h2>

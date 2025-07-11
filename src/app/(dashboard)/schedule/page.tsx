@@ -1,8 +1,8 @@
-import { Metadata } from "next";
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Schedule",
-  description: "Schedule for tasks",
+  title: 'Schedule',
+  description: 'Schedule for tasks',
 };
 
 export default function SchedulePage() {

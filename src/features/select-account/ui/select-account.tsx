@@ -6,8 +6,8 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/shared/ui/select";
-import { ProfileItem } from "./profile-item";
+} from '@/shared/ui/select';
+import { ProfileItem } from './profile-item';
 
 export function SelectAccount() {
   return (

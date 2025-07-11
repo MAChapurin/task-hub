@@ -1,8 +1,8 @@
-import { Metadata } from "next";
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Insight",
-  description: "Insight for tasks",
+  title: 'Insight',
+  description: 'Insight for tasks',
 };
 
 export default function InsightPage() {

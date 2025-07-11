@@ -3,18 +3,20 @@ import { BarChart3, ChartBar, MessageCircle, Palette } from 'lucide-react';
 
 export function FeaturesSrction() {
   return (
-    <BentoGrid className="w-full md:auto-rows-[20rem] py-4">
-      {items.map((item, i) => (
-        <BentoGridItem
-          key={i}
-          title={item.title}
-          description={item.description}
-          header={item.header}
-          className={item.className}
-          icon={item.icon}
-        />
-      ))}
-    </BentoGrid>
+    <div id="features">
+      <BentoGrid className="w-full md:auto-rows-[20rem] py-4">
+        {items.map((item, i) => (
+          <BentoGridItem
+            key={i}
+            title={item.title}
+            description={item.description}
+            header={item.header}
+            className={item.className}
+            icon={item.icon}
+          />
+        ))}
+      </BentoGrid>
+    </div>
   );
 }
 const Skeleton = () => (
