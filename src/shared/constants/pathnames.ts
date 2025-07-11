@@ -7,4 +7,6 @@ export const PATHNAMES = {
   SCHEDULE: '/schedule',
   REPORT: '/report',
   SETTINGS: '/settings',
+  LOGIN: '/login',
+  REGISTER: '/register',
 } as const;

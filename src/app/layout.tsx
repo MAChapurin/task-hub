@@ -3,6 +3,7 @@ import { Poppins } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/features/theme-switcher';
 import { THEMES } from '@/features/theme-switcher/constants';
+import { Toaster } from '@/shared/ui/sonner';
 
 const SITE_NAME = 'Task Hub';
 
@@ -30,6 +31,7 @@ export default async function RootLayout({
       <body className={`${poppins.className} scroll-smooth antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem value={THEMES}>
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

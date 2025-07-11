@@ -1,0 +1,26 @@
+'use client';
+import { PATHNAMES } from '@/shared/constants/pathnames';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/shared/ui/dialog';
+import { AuthAnimateTabs } from '@/widgets/auth-animate-tabs';
+import { usePathname, useRouter } from 'next/navigation';
+
+export default function AuthLAyaout() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const handleClose = () => {
+    router.replace(PATHNAMES.HOME);
+  };
+
+  const isOpen = pathname === PATHNAMES.LOGIN || pathname === PATHNAMES.REGISTER;
+
+  return (
+    <Dialog open={isOpen} onOpenChange={handleClose}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Вход в систему</DialogTitle>
+        </DialogHeader>
+        <AuthAnimateTabs />
+      </DialogContent>
+    </Dialog>
+  );
+}

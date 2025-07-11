@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Grid3x3 } from 'lucide-react';
 import { MobileMenu } from './mobile-menu';
 import NavigationMenuWithActiveItem from './nav-desktop';
+import { Button } from '@/shared/ui/button';
 
 export const HeaderMarketing = () => {
   return (
@@ -13,8 +14,16 @@ export const HeaderMarketing = () => {
           <span className="sr-only">Home</span>
           <Grid3x3 /> TASKHUB
         </Link>
-        <div className="hidden lg:block">
+        <div className="hidden lg:block mr-auto">
           <NavigationMenuWithActiveItem />
+        </div>
+        <div className="hidden lg:flex items-center gap-2">
+          <Link href={PATHNAMES.LOGIN}>
+            <Button>Вход</Button>
+          </Link>
+          <Link href={PATHNAMES.REGISTER}>
+            <Button variant={'outline'}>Регистрация</Button>
+          </Link>
         </div>
         <div className="flex items-center gap-2">
           <ThemeSwitcherShort />

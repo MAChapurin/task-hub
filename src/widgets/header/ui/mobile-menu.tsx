@@ -16,6 +16,7 @@ import {
 import Link from 'next/link';
 
 import { navigationMenuItems } from '../config';
+import { PATHNAMES } from '@/shared/constants/pathnames';
 
 export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,11 +52,21 @@ export function MobileMenu() {
           </ul>
         </nav>
 
+        <div className="flex flex-col items-stretch gap-2 p-4">
+          <Link href={PATHNAMES.LOGIN} className="w-full">
+            <Button className="w-full">Вход</Button>
+          </Link>
+          <Link href={PATHNAMES.REGISTER} className="w-full">
+            <Button variant={'outline'} className="w-full">
+              Регистрация
+            </Button>
+          </Link>
+        </div>
+
         <SheetFooter>
-          <Button type="submit">Save changes</Button>
           <SheetClose asChild>
             <Button variant="outline" onClick={handleClose}>
-              Close
+              Закрыть
             </Button>
           </SheetClose>
         </SheetFooter>
