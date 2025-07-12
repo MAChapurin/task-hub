@@ -11,9 +11,9 @@ export default async function MarketingLayout({
 }>) {
   return (
     <>
+      {children}
       <HeaderMarketing />
       <main className="min-h-screen w-full max-w-400 flex flex-col items-center justify-center  p-2 md:p-4 mx-auto scroll-smooth">
-        {children}
         <HeroSection />
         <AboutSection />
         <FeaturesSrction />

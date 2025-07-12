@@ -1,10 +1,15 @@
 'use client';
 import { PATHNAMES } from '@/shared/constants/pathnames';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/shared/ui/dialog';
-import { AuthAnimateTabs } from '@/widgets/auth-animate-tabs';
+// import { AuthAnimateTabs } from '@/widgets/auth-animate-tabs';
 import { usePathname, useRouter } from 'next/navigation';
+import { ReactNode } from 'react';
 
-export default function AuthLAyaout() {
+export default function AuthLAyaout({
+  children,
+}: Readonly<{
+  children: ReactNode;
+}>) {
   const router = useRouter();
   const pathname = usePathname();
   const handleClose = () => {
@@ -19,7 +24,8 @@ export default function AuthLAyaout() {
         <DialogHeader>
           <DialogTitle>Вход в систему</DialogTitle>
         </DialogHeader>
-        <AuthAnimateTabs />
+        {/* <AuthAnimateTabs /> */}
+        {children}
       </DialogContent>
     </Dialog>
   );
