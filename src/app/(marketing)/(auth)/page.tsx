@@ -1,3 +1,3 @@
-export function AuthPage() {
+export default function AuthPage() {
   return null;
 }
