@@ -4,7 +4,7 @@ import { FAQAccordionSection } from '@/widgets/faq-section';
 import { FeaturesSrction } from '@/widgets/features-section';
 import { HeroSection } from '@/widgets/hero/ui/hero';
 
-export default function MarketingLayout({
+export default async function MarketingLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
