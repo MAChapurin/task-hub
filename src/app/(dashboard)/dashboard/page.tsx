@@ -1,3 +1,4 @@
+import { prisma } from '@/shared/lib/db';
 import { Stats } from '@/shared/ui/stats';
 import { LastTasks } from '@/widgets';
 import { ProjectsStatistic } from '@/widgets/projects-statistic/ui/projects-statistic';
@@ -9,7 +10,13 @@ export const metadata: Metadata = {
   description: 'Dashboard for tasks',
 };
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const users = await prisma.user.findMany({
+    include: {
+      projects: true,
+    },
+  });
+
   return (
     <>
       <div className="flex flex-wrap xl:grid xl:grid-cols-3 gap-4 mb-4">
@@ -38,6 +45,18 @@ export default function DashboardPage() {
         </section>
       </div>
       <LastTasks />
+      <pre
+        style={{
+          backgroundColor: '#f0f0f0',
+          padding: '10px',
+          borderRadius: '8px',
+          overflowX: 'auto',
+          fontFamily: 'monospace',
+          fontSize: '14px',
+        }}
+      >
+        {JSON.stringify(users, null, 2)}
+      </pre>
     </>
   );
 }
