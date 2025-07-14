@@ -11,11 +11,33 @@ export const metadata: Metadata = {
 };
 
 export default async function DashboardPage() {
-  const users = await prisma.user.findMany({
-    include: {
-      projects: true,
-    },
-  });
+  let users;
+  try {
+    users = await prisma.user.findMany({
+      include: {
+        projects: true,
+      },
+    });
+  } catch (error) {
+    console.error('Ошибка при получении пользователей:', error);
+    return (
+      <div className="h-screen flex-col items-center justify-center ">
+        <span className="text-red-500">Ошибка загрузки данных</span>
+        <pre
+          style={{
+            backgroundColor: '#f0f0f0',
+            padding: '10px',
+            borderRadius: '8px',
+            overflowX: 'auto',
+            fontFamily: 'monospace',
+            fontSize: '14px',
+          }}
+        >
+          {JSON.stringify(error, null, 2)}
+        </pre>
+      </div>
+    );
+  }
 
   return (
     <>
