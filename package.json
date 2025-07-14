@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier --write 'src/**/*{css,js,jsx,ts,tsx}'",
@@ -12,7 +12,7 @@
     "prisma:studio": "npx prisma studio",
     "prisma:push": "npx prisma db push",
     "prisma:migrate": "npx prisma migrate dev",
-    "db:reset": "npx prisma migrate reset"
+    "prisma:reset": "npx prisma migrate reset"
   },
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-beta.1",
