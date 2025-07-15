@@ -2,18 +2,20 @@
   "name": "task-hub",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "prisma generate && next build",
-    "start": "next start",
-    "lint": "next lint",
-    "prettier": "prettier --write 'src/**/*{css,js,jsx,ts,tsx}'",
-    "prisma:seed": "tsx prisma/seed.ts",
-    "prisma:studio": "npx prisma studio",
-    "prisma:push": "npx prisma db push",
-    "prisma:migrate": "npx prisma migrate dev",
-    "prisma:reset": "npx prisma migrate reset"
-  },
+"scripts": {
+  "dev": "next dev --turbopack",
+  "build": "prisma generate && next build",
+  "start": "next start",
+  "lint": "next lint",
+  "prettier": "prettier --write 'src/**/*{css,js,jsx,ts,tsx}'",
+  "prisma:seed": "tsx prisma/seed.ts",
+  "prisma:studio": "npx prisma studio",
+  "prisma:push": "npx prisma db push",
+  "migrate:deploy": "npx prisma migrate deploy",
+  "migrate:reset": "npx prisma migrate reset",
+  "deploy": "npm run migrate:deploy && npm run generate",
+  "generate": "prisma generate"
+},
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-beta.1",
     "@hookform/resolvers": "^5.1.1",
