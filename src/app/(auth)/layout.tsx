@@ -5,7 +5,7 @@ import { AuthAnimateTabs } from '@/widgets/auth-animate-tabs';
 import { usePathname, useRouter } from 'next/navigation';
 import { ReactNode } from 'react';
 
-export function AuthClientLayout({
+export default function AuthClientLayout({
   children,
 }: Readonly<{
   children: ReactNode;

@@ -1,13 +1,6 @@
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/shared/ui/select';
+import { Select, SelectContent, SelectTrigger, SelectValue } from '@/shared/ui/select';
 import { ProfileItem } from './profile-item';
+import { LogoutButton } from '@/features/auth';
 
 export function SelectAccount() {
   return (
@@ -24,30 +17,7 @@ export function SelectAccount() {
         />
       </SelectTrigger>
       <SelectContent>
-        <SelectGroup>
-          <SelectLabel>Accounts</SelectLabel>
-          <SelectItem value="apple">
-            <ProfileItem
-              src="https://github.com/leerob.png"
-              name="Frodo Baggins"
-              mail="example@mail.com"
-            />
-          </SelectItem>
-          <SelectItem value="banana">
-            <ProfileItem
-              src="https://github.com/evilrabbit.png"
-              name="John Smith"
-              mail="example@mail.com"
-            />
-          </SelectItem>
-          <SelectItem value="blueberry">
-            <ProfileItem
-              src="https://github.com/shadcn.png"
-              name="Jhon Smith"
-              mail="example@mail.com"
-            />
-          </SelectItem>
-        </SelectGroup>
+        <LogoutButton />
       </SelectContent>
     </Select>
   );

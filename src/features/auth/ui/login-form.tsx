@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/shared/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/shared/ui/form';
 import { Input } from '@/shared/ui/input';
+import { PATHNAMES } from '@/shared/constants/pathnames';
 
 const FormSchema = z.object({
   username: z.string().min(2, {
@@ -30,10 +31,28 @@ export function LoginForm() {
     },
   });
 
-  function onSubmit() {
-    toast('Выполнен вход в систему');
-    router.push('/dashboard');
-  }
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (res.ok) {
+        toast('Успешный вход');
+        router.push(PATHNAMES.DASHBOARD);
+      } else {
+        const errorData = await res.json();
+        toast.error(errorData.message || 'Ошибка входа');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Произошла ошибка. Попробуйте позже.');
+    }
+  };
 
   return (
     <Form {...form}>
