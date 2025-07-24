@@ -1,3 +1,4 @@
+import { LogoutButton } from '@/features/account/ui/logout-button';
 import { ThemeSwitcher } from '@/features/theme-switcher/ui/theme-switcher';
 import { Button } from '@/shared/ui/button';
 import { SidebarTrigger } from '@/shared/ui/sidebar';
@@ -12,8 +13,9 @@ export const Header = () => {
       <h1 className="font-semibold text-4xl w-fit">Dashboard</h1>
       <div className="ml-auto flex items-center gap-4">
         <AsideMessagesDrawer />
+        <LogoutButton />
         <SearchDialog />
-        <Button size={'icon'} variant={'outline'} className="">
+        <Button size={'icon'} variant={'outline'}>
           <Bell />
         </Button>
         <ThemeSwitcher />

@@ -8,7 +8,7 @@ import {
 } from '@/shared/animate-ui/radix/tabs';
 import { usePathname, useRouter } from 'next/navigation';
 import { PATHNAMES } from '@/shared/constants/pathnames';
-import { LoginForm, RegistrationForm } from '@/features/auth';
+import { SignInForm, SignUpForm } from '@/features/auth';
 
 export const AuthAnimateTabs = () => {
   const pathname = usePathname();
@@ -30,10 +30,12 @@ export const AuthAnimateTabs = () => {
 
       <TabsContents className="mx-1 mb-1 -mt-2 rounded-sm h-full bg-background">
         <TabsContent value={PATHNAMES.LOGIN} className="space-y-2 p-2 md:space-y-6 md:p-6">
-          <LoginForm />
+          {/* <LoginForm /> */}
+          <SignInForm />
         </TabsContent>
         <TabsContent value={PATHNAMES.REGISTER} className="space-y-2 p-2 md:space-y-6 md:p-6">
-          <RegistrationForm />
+          {/* <RegistrationForm /> */}
+          <SignUpForm />
         </TabsContent>
       </TabsContents>
     </Tabs>

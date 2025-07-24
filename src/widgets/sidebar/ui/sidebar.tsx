@@ -14,18 +14,12 @@ import {
 import Link from 'next/link';
 
 import { MAIN_MENU, projects } from '../config';
-import { SelectAccount } from '@/features/select-account';
 
-export function AppSidebar() {
+export function AppSidebar({ accountSlot }: { accountSlot: React.ReactNode }) {
   return (
     <Sidebar>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Account</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SelectAccount />
-          </SidebarGroupContent>
-        </SidebarGroup>
+        {accountSlot}
         <SidebarGroup>
           <SidebarGroupLabel>Main menu</SidebarGroupLabel>
           <SidebarGroupContent>
