@@ -4,7 +4,9 @@ import { Prisma } from '@prisma/client';
 
 export function saveUser(user: UserEntity): Promise<UserEntity> {
   return prisma.user.upsert({
-    where: { id: user.id },
+    where: {
+      id: user.id,
+    },
     create: user,
     update: user,
   });

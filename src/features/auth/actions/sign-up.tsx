@@ -12,6 +12,8 @@ export type SignUnFormState = {
     password?: string;
     confirmPassword?: string;
     email?: string;
+    name?: string;
+    surname?: string;
     _errors?: string;
   };
 };
@@ -22,6 +24,8 @@ const formDataSchema = z
     password: z.string().min(3),
     confirmPassword: z.string().min(3),
     email: z.string().email('Некорректный email'),
+    name: z.string().min(1, 'Имя обязательно'),
+    surname: z.string().min(1, 'Фамилия обязательна'),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Пароли не совпадают',
@@ -44,14 +48,23 @@ export const signUpAction = async (
         password: formatedErrors.password?._errors.join(', '),
         confirmPassword: formatedErrors.confirmPassword?._errors.join(', '),
         email: formatedErrors.email?._errors.join(', '),
-        _errors: formatedErrors._errors.join(', '),
+        name: formatedErrors.name?._errors.join(', '),
+        surname: formatedErrors.surname?._errors.join(', '),
+        _errors: formatedErrors._errors?.join(', '),
       },
     };
   }
 
-  const { login, password, email } = result.data;
+  const { login, password, email, name, surname } = result.data;
 
-  const createUserResult = await createUser({ login, password, email });
+  const createUserResult = await createUser({
+    login,
+    password,
+    email,
+    name,
+    surname,
+    avatarUrl: null,
+  });
 
   if (createUserResult.type === 'right') {
     await sessionService.addSession(createUserResult.value);

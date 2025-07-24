@@ -12,12 +12,16 @@ export function AuthFieldsRegister({
     password?: string;
     confirmPassword?: string;
     email?: string;
+    name?: string;
+    surname?: string;
   };
 }) {
   const loginId = useId();
+  const emailId = useId();
   const passwordId = useId();
   const confirmPasswordId = useId();
-  const emailId = useId();
+  const nameId = useId();
+  const surnameId = useId();
 
   return (
     <>
@@ -25,9 +29,7 @@ export function AuthFieldsRegister({
         <Label htmlFor={loginId}>Login</Label>
         <Input
           id={loginId}
-          type="text"
           name="login"
-          placeholder="Enter your login"
           required
           defaultValue={formData?.get('login')?.toString()}
         />
@@ -40,11 +42,27 @@ export function AuthFieldsRegister({
           id={emailId}
           type="email"
           name="email"
-          placeholder="Enter your email"
           required
           defaultValue={formData?.get('email')?.toString()}
         />
         {errors?.email && <div className="text-red-500 text-sm">{errors.email}</div>}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor={nameId}>Имя</Label>
+        <Input id={nameId} name="name" required defaultValue={formData?.get('name')?.toString()} />
+        {errors?.name && <div className="text-red-500 text-sm">{errors.name}</div>}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor={surnameId}>Фамилия</Label>
+        <Input
+          id={surnameId}
+          name="surname"
+          required
+          defaultValue={formData?.get('surname')?.toString()}
+        />
+        {errors?.surname && <div className="text-red-500 text-sm">{errors.surname}</div>}
       </div>
 
       <div className="space-y-2">
@@ -53,7 +71,6 @@ export function AuthFieldsRegister({
           id={passwordId}
           type="password"
           name="password"
-          placeholder="Enter your password"
           required
           defaultValue={formData?.get('password')?.toString()}
         />
@@ -66,7 +83,6 @@ export function AuthFieldsRegister({
           id={confirmPasswordId}
           type="password"
           name="confirmPassword"
-          placeholder="Repeat your password"
           required
           defaultValue={formData?.get('confirmPassword')?.toString()}
         />

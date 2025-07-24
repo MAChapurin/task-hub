@@ -8,30 +8,47 @@ datasource db {
 }
 
 model User {
-  id           String @id @default(cuid())
-  login        String
+  id           String  @id @default(cuid())
+  login        String  @unique
   passwordHash String
-  salt         String @default("")
-  email        String @unique
-  // avatarUrl    String?
-  // projects  Project[] @relation("UserProjects")
+  salt         String  @default("")
+  email        String
+  name         String
+  surname      String
+  avatarUrl    String?
+
+  ownedProjects       Project[]            @relation("UserOwnedProjects")
+  projectParticipants ProjectParticipant[]
 }
 
-// model Project {
-//   id       String   @id @default(cuid())
-//   title    String
-//   status   String
-//   progress Int
-//   dueDate  DateTime
-//   icon     String
-//   ownerId  String
-//   // owner    User     @relation("UserProjects", fields: [ownerId], references: [id])
-//   tasks    Task[]   @relation("ProjectTasks")
-// }
+model Project {
+  id       String   @id @default(cuid())
+  title    String
+  status   String
+  progress Int
+  dueDate  DateTime
+  icon     String
 
-// model Task {
-//   id        String  @id @default(cuid())
-//   title     String
-//   projectId String
-//   project   Project @relation(fields: [projectId], references: [id], name: "ProjectTasks")
-// }
+  ownerId String
+  owner   User   @relation("UserOwnedProjects", fields: [ownerId], references: [id])
+
+  tasks        Task[]               @relation("ProjectTasks")
+  participants ProjectParticipant[]
+}
+
+model Task {
+  id        String  @id @default(cuid())
+  title     String
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], name: "ProjectTasks")
+}
+
+model ProjectParticipant {
+  userId    String
+  projectId String
+
+  user    User    @relation(fields: [userId], references: [id])
+  project Project @relation(fields: [projectId], references: [id])
+
+  @@id([userId, projectId])
+}

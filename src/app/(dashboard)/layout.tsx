@@ -40,7 +40,10 @@ export default async function RootLayout({
           <SidebarGroup>
             <SidebarGroupLabel>Account</SidebarGroupLabel>
             <SidebarGroupContent>
-              <UserAccountClient email={user?.email || ''} login={user?.login || ''} />
+              <UserAccountClient
+                email={user?.email || ''}
+                login={`${user?.name} ${user?.surname}`}
+              />
             </SidebarGroupContent>
           </SidebarGroup>
         }

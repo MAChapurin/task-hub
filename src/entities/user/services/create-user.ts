@@ -7,10 +7,16 @@ export const createUser = async ({
   login,
   password,
   email,
+  name,
+  surname,
+  avatarUrl,
 }: {
   login: string;
   password: string;
   email: string;
+  name: string;
+  surname: string;
+  avatarUrl: string | null;
 }) => {
   const userWithLogin = await userRepository.getUser({ login });
 
@@ -26,6 +32,9 @@ export const createUser = async ({
     passwordHash: hash,
     salt,
     email,
+    name,
+    surname,
+    avatarUrl,
   });
 
   return right(user);

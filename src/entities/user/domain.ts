@@ -4,6 +4,9 @@ export type UserEntity = {
   passwordHash: string;
   salt: string;
   email: string;
+  name: string;
+  surname: string;
+  avatarUrl: string | null;
 };
 
 export type SessionEntity = {
