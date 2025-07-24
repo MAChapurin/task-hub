@@ -52,9 +52,6 @@ export default async function RootLayout({
         <div className="xl:flex">
           <div className="md:grow">
             <Header />
-            <h1>
-              {user?.login} {user?.email}
-            </h1>
             <main className="p-4">{children}</main>
           </div>
           <AsidePanel />
