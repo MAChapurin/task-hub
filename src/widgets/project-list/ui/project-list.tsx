@@ -1,15 +1,9 @@
-'use client';
-
 import { FC } from 'react';
 
-import { ProjectWithParticipants } from '../domain';
 import { ProjectCard } from './project-card';
+import { ProjectListProps } from '../types/project-list.types';
 
-type Props = {
-  projects: ProjectWithParticipants[];
-};
-
-export const ProjectList: FC<Props> = ({ projects }) => {
+export const ProjectList: FC<ProjectListProps> = ({ projects }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
       {projects.map((project) => (

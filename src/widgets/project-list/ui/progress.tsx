@@ -1,10 +1,5 @@
 import { cn } from '@/shared/lib/css';
-import { Percent } from '@/shared/types';
-
-type ProgressProps = {
-  value: Percent;
-  background?: string;
-};
+import { ProgressProps } from '../types/project-list.types';
 
 export const Progress = ({ value }: ProgressProps) => {
   const percentage = Math.min(Math.max(value, 0), 100);

@@ -9,25 +9,20 @@ import {
 } from '@/shared/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 
-import { ProjectWithParticipants } from '../domain';
 import { BookImage, CalendarDays, Link, MessageSquareText, Pencil, Plus } from 'lucide-react';
 import { format } from 'date-fns';
 import { Button } from '@/shared/ui/button';
 import { cn } from '@/shared/lib/css';
 import { Progress } from './progress';
 import { Percent } from '@/shared/types';
+import { ProjectCardProps } from '../types/project-list.types';
 
-type Props = {
-  project: ProjectWithParticipants;
-};
-
-export const ProjectCard: FC<Props> = ({ project }) => {
+export const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
   return (
     <Card>
       <CardHeader>
         <div className="flex justify-between items-start">
           <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground">
-            {/* <FolderKanban /> */}
             {project.icon}
           </div>
           <div className="flex -space-x-2">

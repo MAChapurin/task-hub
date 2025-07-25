@@ -1,6 +1,6 @@
 import { getProjectsByUser } from '@/entities/project/server';
-import { CreateProjectDialog } from '@/entities/project/ui/create-project-dialog';
-import { ProjectList } from '@/entities/project/ui/project-list';
+
+import { ProjectList } from '@/widgets/project-list/ui/project-list';
 import { getCurrentUser } from '@/entities/user/server';
 import { Stats } from '@/shared/ui/stats';
 
@@ -9,6 +9,7 @@ import { LastTasks } from '@/widgets';
 import { ProjectsStatistic } from '@/widgets/projects-statistic/ui/projects-statistic';
 
 import { Metadata } from 'next';
+import { CreateProjectDialog } from '@/widgets/project-list';
 
 export const metadata: Metadata = {
   title: 'Dashboard',

@@ -20,7 +20,7 @@ export default function AuthClientLayout({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent>
+      <DialogContent className="max-h-screen overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Вход в систему</DialogTitle>
         </DialogHeader>
