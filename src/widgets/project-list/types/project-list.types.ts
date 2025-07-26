@@ -9,3 +9,7 @@ export type ProgressProps = {
 export type ProjectCardProps = {
   project: ProjectWithParticipants;
 };
+
+export type ProjectListProps = {
+  projects: ProjectWithParticipants[];
+};
