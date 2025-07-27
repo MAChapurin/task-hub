@@ -14,7 +14,6 @@ import { format } from 'date-fns';
 import { Button } from '@/shared/ui/button';
 import { cn } from '@/shared/lib/css';
 import { Progress } from './progress';
-import { Percent } from '@/shared/types';
 import { ProjectCardProps } from '../types/project-list.types';
 
 export const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
@@ -41,7 +40,7 @@ export const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Progress value={project.progress as Percent} />
+        <Progress value={0} />
       </CardContent>
       <CardFooter className="flex items-center justify-between flex-wrap">
         <div className="flex items-center gap-2">

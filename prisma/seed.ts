@@ -10,8 +10,6 @@ async function main() {
       {
         id: 'project1',
         title: 'Первый проект',
-        status: 'active',
-        progress: 45,
         dueDate: new Date('2025-12-31'),
         icon: '🚀',
         ownerId,
@@ -19,8 +17,6 @@ async function main() {
       {
         id: 'project2',
         title: 'Второй проект',
-        status: 'pending',
-        progress: 0,
         dueDate: new Date('2025-11-15'),
         icon: '📦',
         ownerId,
@@ -28,8 +24,6 @@ async function main() {
       {
         id: 'project3',
         title: 'Завершённый проект',
-        status: 'completed',
-        progress: 100,
         dueDate: new Date('2024-06-30'),
         icon: '✅',
         ownerId,
@@ -38,7 +32,6 @@ async function main() {
     skipDuplicates: true,
   });
 
-  // Создаем участников проектов (включая владельца)
   // Участники для project1
   await prisma.projectParticipant.upsert({
     where: {

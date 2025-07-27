@@ -22,12 +22,10 @@ model User {
 }
 
 model Project {
-  id       String   @id @default(cuid())
-  title    String
-  status   String
-  progress Int
-  dueDate  DateTime
-  icon     String
+  id      String   @id @default(cuid())
+  title   String
+  dueDate DateTime
+  icon    String
 
   ownerId String
   owner   User   @relation("UserOwnedProjects", fields: [ownerId], references: [id])

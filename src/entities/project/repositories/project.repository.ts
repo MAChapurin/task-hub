@@ -54,8 +54,6 @@ export const projectRepository = {
 
   create: (data: {
     title: string;
-    status: string;
-    progress: number;
     dueDate: Date;
     icon: string;
     ownerId: string;
@@ -65,8 +63,6 @@ export const projectRepository = {
       const project = await tx.project.create({
         data: {
           title: data.title,
-          status: data.status,
-          progress: data.progress,
           dueDate: data.dueDate,
           icon: data.icon,
           ownerId: data.ownerId,
@@ -85,10 +81,7 @@ export const projectRepository = {
       return project;
     }),
 
-  update: (
-    id: string,
-    data: Partial<{ title: string; status: string; progress: number; dueDate: Date; icon: string }>
-  ) =>
+  update: (id: string, data: Partial<{ title: string; dueDate: Date; icon: string }>) =>
     prisma.project.update({
       where: { id },
       data,

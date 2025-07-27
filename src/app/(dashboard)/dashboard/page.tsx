@@ -9,7 +9,7 @@ import { LastTasks } from '@/widgets';
 import { ProjectsStatistic } from '@/widgets/projects-statistic/ui/projects-statistic';
 
 import { Metadata } from 'next';
-import { CreateProjectDialog } from '@/widgets/project-list';
+import { CreateProjectDialog } from '@/features/create-project';
 
 export const metadata: Metadata = {
   title: 'Dashboard',
@@ -56,7 +56,9 @@ export default async function DashboardPage() {
       </div>
       <section className="mb-8">
         <h2 className="text-xl font-bold mb-4">Мои проекты ({projects.length})</h2>
-        <CreateProjectDialog />
+        <div className="mb-5">
+          <CreateProjectDialog />
+        </div>
         <ProjectList projects={projects} />
       </section>
       <LastTasks />
