@@ -58,6 +58,7 @@ export const projectRepository = {
     dueDate: Date;
     icon: string;
     ownerId: string;
+    status?: string;
     participantIds?: string[];
   }) =>
     prisma.$transaction(async (tx) => {
@@ -67,6 +68,7 @@ export const projectRepository = {
           dueDate: data.dueDate,
           icon: data.icon,
           ownerId: data.ownerId,
+          status: data.status ?? 'BACKLOG',
         },
       });
 
@@ -82,7 +84,15 @@ export const projectRepository = {
       return project;
     }),
 
-  update: (id: string, data: Partial<{ title: string; dueDate: Date; icon: string }>) =>
+  update: (
+    id: string,
+    data: Partial<{
+      title: string;
+      dueDate: Date;
+      icon: string;
+      status: string;
+    }>
+  ) =>
     prisma.project.update({
       where: { id },
       data,

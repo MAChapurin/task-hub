@@ -36,6 +36,7 @@ export const createProject = async ({
       icon,
       ownerId,
       participantIds,
+      status: 'BACKLOG',
     });
 
     return right({ id: project.id });

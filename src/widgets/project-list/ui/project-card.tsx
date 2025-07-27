@@ -17,6 +17,7 @@ import { Progress } from './progress';
 import { ProjectCardProps } from '../types/project-list.types';
 import { EditProjectDialog } from '@/features/edit-project';
 import { DeleteProjectButton } from '@/features/delete-project/ui/delete-project-dialog';
+import { StatusBadge } from './status-badge';
 
 export const ProjectCard: FC<ProjectCardProps> = ({ project, currentUserId }) => {
   const isOwner = project.ownerId === currentUserId;
@@ -36,7 +37,11 @@ export const ProjectCard: FC<ProjectCardProps> = ({ project, currentUserId }) =>
             ))}
           </div>
         </div>
-        <CardTitle className="text-xl">{project.title}</CardTitle>
+        <CardTitle className="text-xl flex items-center justify-between">
+          {project.title}{' '}
+          <StatusBadge status={project.status as 'BACKLOG' | 'IN_PROGRESS' | 'DONE'} />
+        </CardTitle>
+
         <CardDescription className="flex items-center gap-1 text-sm text-muted-foreground">
           <CalendarDays className="w-4 h-4" />
           {format(new Date(project.dueDate), 'dd MMM yyyy')}
@@ -61,7 +66,9 @@ export const ProjectCard: FC<ProjectCardProps> = ({ project, currentUserId }) =>
           <Button className={cn('w-12 h-12 rounded-full bg-chart-1')} variant="outline" size="sm">
             <Plus className="text-background" />
           </Button>
-          <EditProjectDialog project={project} />
+          <EditProjectDialog
+            project={{ ...project, status: project.status as 'BACKLOG' | 'IN_PROGRESS' | 'DONE' }}
+          />
           {isOwner && (
             <DeleteProjectButton
               projectId={project.id}

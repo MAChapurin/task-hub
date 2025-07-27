@@ -26,9 +26,9 @@ model Project {
   title   String
   dueDate DateTime
   icon    String
-
+  status  String   @default("BACKLOG")
   ownerId String
-  owner   User   @relation("UserOwnedProjects", fields: [ownerId], references: [id])
+  owner   User     @relation("UserOwnedProjects", fields: [ownerId], references: [id])
 
   tasks        Task[]               @relation("ProjectTasks")
   participants ProjectParticipant[]

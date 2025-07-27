@@ -17,11 +17,14 @@ import { Label } from '@/shared/ui/label';
 import { Button } from '@/shared/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/shared/ui/popover';
 import { Calendar } from '@/shared/ui/calendar';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/shared/ui/select';
 
 import { cn } from '@/shared/lib/css';
 import { useActionState } from '@/shared/lib/react';
 import { editProjectAction, EditProjectFormState } from '../action/edit-project.action';
 import { EMOJIS } from '@/shared/constants/emojis';
+
+type StatusUnion = 'BACKLOG' | 'IN_PROGRESS' | 'DONE';
 
 type EditProjectDialogProps = {
   project: {
@@ -29,6 +32,7 @@ type EditProjectDialogProps = {
     title: string;
     dueDate: Date;
     icon: string;
+    status: StatusUnion;
   };
 };
 
@@ -38,6 +42,7 @@ export function EditProjectDialog({ project }: EditProjectDialogProps) {
   const [emojiDialogOpen, setEmojiDialogOpen] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState(project.icon);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date(project.dueDate));
+  const [selectedStatus, setSelectedStatus] = useState<StatusUnion>(project.status);
 
   const [formState, dispatch, isPending] = useActionState(
     editProjectAction,
@@ -68,6 +73,7 @@ export function EditProjectDialog({ project }: EditProjectDialogProps) {
           action={(formData) => {
             formData.set('id', project.id);
             formData.set('icon', selectedEmoji);
+            formData.set('status', selectedStatus);
             if (selectedDate) {
               formData.set('dueDate', selectedDate.toISOString());
             }
@@ -75,6 +81,7 @@ export function EditProjectDialog({ project }: EditProjectDialogProps) {
           }}
           className="grid gap-4"
         >
+          {/* Название */}
           <div className="grid gap-2">
             <Label htmlFor="title">Название</Label>
             <Input
@@ -88,6 +95,7 @@ export function EditProjectDialog({ project }: EditProjectDialogProps) {
             )}
           </div>
 
+          {/* Дата + Логотип */}
           <div className="grid gap-2">
             <div className="flex gap-2">
               <div className="flex-1">
@@ -116,6 +124,7 @@ export function EditProjectDialog({ project }: EditProjectDialogProps) {
                   </PopoverContent>
                 </Popover>
               </div>
+
               <div className="flex-1">
                 <Label className="mb-2">Логотип</Label>
                 <Button
@@ -135,6 +144,26 @@ export function EditProjectDialog({ project }: EditProjectDialogProps) {
             )}
             {formState.errors?.icon && (
               <p className="text-sm text-red-500">{formState.errors.icon}</p>
+            )}
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="status">Статус</Label>
+            <Select
+              value={selectedStatus}
+              onValueChange={(value) => setSelectedStatus(value as StatusUnion)}
+            >
+              <SelectTrigger className={cn(formState.errors?.status && 'border-red-500')}>
+                <SelectValue placeholder="Выберите статус" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="BACKLOG">Backlog</SelectItem>
+                <SelectItem value="IN_PROGRESS">In Progress</SelectItem>
+                <SelectItem value="DONE">Done</SelectItem>
+              </SelectContent>
+            </Select>
+            {formState.errors?.status && (
+              <p className="text-sm text-red-500">{formState.errors.status}</p>
             )}
           </div>
 

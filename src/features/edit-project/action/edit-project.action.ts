@@ -34,6 +34,7 @@ export const editProjectAction = async (
     title: parsed.data.title,
     dueDate: new Date(parsed.data.dueDate),
     icon: parsed.data.icon,
+    status: parsed.data.status,
   });
 
   const errorMessages: Record<string, string> = {
