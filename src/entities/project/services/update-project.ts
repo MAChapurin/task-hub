@@ -1,13 +1,12 @@
 import { projectRepository } from '../repositories/project.repository';
 import { Either, left, right } from '@/shared/lib/either';
-import { ProjectStatus } from '@prisma/client';
 
 type UpdateProjectInput = {
   id: string;
   title?: string;
   dueDate?: Date;
   icon?: string;
-  status?: ProjectStatus;
+  status?: string;
 };
 
 export const updateProject = async ({
