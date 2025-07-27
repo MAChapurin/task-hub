@@ -6,6 +6,7 @@ export const projectRepository = {
     prisma.project.findUnique({
       where: { id },
       include: {
+        owner: true,
         participants: {
           include: {
             user: {

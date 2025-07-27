@@ -9,14 +9,17 @@ import {
 } from '@/shared/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 
-import { BookImage, CalendarDays, Link, MessageSquareText, Pencil, Plus } from 'lucide-react';
+import { BookImage, CalendarDays, Link, MessageSquareText, Plus } from 'lucide-react';
 import { format } from 'date-fns';
 import { Button } from '@/shared/ui/button';
 import { cn } from '@/shared/lib/css';
 import { Progress } from './progress';
 import { ProjectCardProps } from '../types/project-list.types';
+import { EditProjectDialog } from '@/features/edit-project';
+import { DeleteProjectButton } from '@/features/delete-project/ui/delete-project-dialog';
 
-export const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
+export const ProjectCard: FC<ProjectCardProps> = ({ project, currentUserId }) => {
+  const isOwner = project.ownerId === currentUserId;
   return (
     <Card>
       <CardHeader>
@@ -58,9 +61,14 @@ export const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
           <Button className={cn('w-12 h-12 rounded-full bg-chart-1')} variant="outline" size="sm">
             <Plus className="text-background" />
           </Button>
-          <Button className="w-12 h-12 rounded-full" variant="outline" size="sm">
-            <Pencil />
-          </Button>
+          <EditProjectDialog project={project} />
+          {isOwner && (
+            <DeleteProjectButton
+              projectId={project.id}
+              ownerId={project.ownerId}
+              currentUserId={currentUserId}
+            />
+          )}
         </div>
       </CardFooter>
     </Card>

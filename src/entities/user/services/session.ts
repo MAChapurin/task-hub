@@ -15,7 +15,7 @@ async function encrypt(payload: SessionEntity) {
       .setProtectedHeader({ alg: 'HS256' })
       .setIssuedAt()
       // .setExpirationTime('7d')
-      .setExpirationTime('2m')
+      .setExpirationTime('5m')
       .sign(encodedKey)
   );
 }

@@ -8,8 +8,10 @@ export type ProgressProps = {
 
 export type ProjectCardProps = {
   project: ProjectWithParticipants;
+  currentUserId: string;
 };
 
 export type ProjectListProps = {
   projects: ProjectWithParticipants[];
+  currentUserId: string;
 };
