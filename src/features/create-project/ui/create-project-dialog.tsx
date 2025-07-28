@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { format } from 'date-fns';
-import { CalendarIcon } from 'lucide-react';
+import { CalendarIcon, PlusCircle } from 'lucide-react';
 
 import {
   Dialog,
@@ -45,7 +45,12 @@ export function CreateProjectDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Создать проект</Button>
+        <Button
+          variant="ghost"
+          className="h-24 w-24 rounded-full p-0 flex items-center justify-center"
+        >
+          <PlusCircle className="min-h-24 min-w-24" />
+        </Button>
       </DialogTrigger>
 
       <DialogContent>

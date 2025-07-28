@@ -1,14 +1,13 @@
 import { getProjectsByUser } from '@/entities/project/server';
 import { getCurrentUser } from '@/entities/user/server';
 
-import { ProjectList } from '@/widgets/project-list/ui/project-list';
 import { ProjectsStatistic } from '@/widgets/projects-statistic/ui/projects-statistic';
 import { Stats } from '@/shared/ui/stats';
-import { LastTasks } from '@/widgets';
-import { CreateProjectDialog } from '@/features/create-project';
 
 import { Metadata } from 'next';
 import { matchEither } from '@/shared/lib/either';
+
+import { ProjectSection } from '@/widgets/project-list';
 
 export const metadata: Metadata = {
   title: 'Dashboard',
@@ -65,16 +64,7 @@ export default async function DashboardPage() {
             <ProjectsStatistic />
           </section>
         </div>
-
-        <section className="mb-8">
-          <h2 className="text-xl font-bold mb-4">Мои проекты ({projects.length})</h2>
-          <div className="mb-5">
-            <CreateProjectDialog />
-          </div>
-          <ProjectList projects={projects} currentUserId={user.id} />
-        </section>
-
-        <LastTasks />
+        <ProjectSection projects={projects} currentUserId={user.id} />
       </>
     ),
   });
