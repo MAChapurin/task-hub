@@ -9,15 +9,16 @@ import {
 } from '@/shared/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 
-import { BookImage, CalendarDays, Link, MessageSquareText, Plus } from 'lucide-react';
+import { BookImage, CalendarDays, Link, MessageSquareText } from 'lucide-react';
 import { format } from 'date-fns';
 import { Button } from '@/shared/ui/button';
-import { cn } from '@/shared/lib/css';
+
 import { Progress } from './progress';
 import { ProjectCardProps } from '../types/project-list.types';
 import { EditProjectDialog } from '@/features/edit-project';
 import { DeleteProjectButton } from '@/features/delete-project/ui/delete-project-dialog';
 import { StatusBadge } from './status-badge';
+import { CreateTaskDialog } from '@/features/create-task';
 
 export const ProjectCard: FC<ProjectCardProps> = ({ project, currentUserId }) => {
   const isOwner = project.ownerId === currentUserId;
@@ -63,9 +64,7 @@ export const ProjectCard: FC<ProjectCardProps> = ({ project, currentUserId }) =>
           </Button>
         </div>
         <div className="flex items-center gap-2 ml-auto">
-          <Button className={cn('w-12 h-12 rounded-full bg-chart-1')} variant="outline" size="sm">
-            <Plus className="text-background" />
-          </Button>
+          <CreateTaskDialog projectId={project.id} />
           <EditProjectDialog
             project={{ ...project, status: project.status as 'BACKLOG' | 'IN_PROGRESS' | 'DONE' }}
           />
