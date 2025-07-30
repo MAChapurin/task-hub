@@ -18,9 +18,11 @@ export const metadata: Metadata = {
   description: 'Проекты для задач',
 };
 
-type SearchParams = { [key: string]: string | undefined };
+interface DashboardPageProps {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}
 
-export default async function DashboardPage({ searchParams }: { searchParams: SearchParams }) {
+export default async function DashboardPage({ searchParams }: DashboardPageProps) {
   const user = await getCurrentUser();
   if (!user) return <UserNotFound />;
 
@@ -31,7 +33,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Se
   ]);
 
   const workingHours = calculateWorkingHours(tasksResult);
-  const projectId = searchParams.projectId || '';
+  const params = await searchParams;
+  const projectId = params.projectId || '';
 
   return matchEither(projectsResult, {
     left: (error) => <ProjectFetchError error={error} />,
