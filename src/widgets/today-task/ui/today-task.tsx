@@ -60,6 +60,12 @@ export const TodayTasksWidget = ({ tasks }: { tasks: Task[] }) => {
               const startTime = `${String(startHour).padStart(2, '0')}:00`;
               const endTime = `${String(startHour + duration).padStart(2, '0')}:00`;
 
+              const taskStart = task.startDate!;
+              const taskEnd = new Date(
+                taskStart.getTime() + (task.durationHours ?? 1) * 60 * 60 * 1000
+              );
+              const isOverdue = task.status !== 'DONE' && taskEnd < now;
+
               return (
                 <Tooltip key={task.id}>
                   <TooltipTrigger asChild>
@@ -67,7 +73,9 @@ export const TodayTasksWidget = ({ tasks }: { tasks: Task[] }) => {
                       className={cn(
                         'absolute px-3 py-2 text-[12px] rounded overflow-visible border',
                         'flex flex-col gap-1 justify-center',
-                        'bg-chart-1 text-foreground border-transparent',
+                        isOverdue
+                          ? 'bg-destructive text-destructive-foreground border-destructive'
+                          : 'bg-chart-1 text-foreground border-transparent',
                         'hover:scale-[1.02] hover:shadow-md transition-all duration-200 cursor-pointer'
                       )}
                       style={{
@@ -95,6 +103,9 @@ export const TodayTasksWidget = ({ tasks }: { tasks: Task[] }) => {
                       Длительность: {task.durationHours ?? '?'}{' '}
                       {pluralize(task.durationHours || 0, ['час', 'часа', 'часов'])}
                     </div>
+                    {isOverdue && (
+                      <div className="text-destructive font-semibold mt-1">Просрочено</div>
+                    )}
                   </TooltipContent>
                 </Tooltip>
               );

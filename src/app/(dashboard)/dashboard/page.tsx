@@ -77,7 +77,7 @@ function DashboardStats({
 }) {
   return (
     <>
-      <h1 className="font-semibold text-4xl w-fit mb-4">Dashboard</h1>
+      <h1 className="font-semibold text-4xl w-fit mb-4">Проекты</h1>
       <div className="flex flex-wrap xl:grid xl:grid-cols-3 gap-4 mb-4">
         <section className="flex flex-col gap-4 items-stretch w-full max-w-full">
           <Stats
