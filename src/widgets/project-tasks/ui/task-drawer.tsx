@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/shared/ui/dialog';
 import { ReactNode } from 'react';
+import { cn } from '@/shared/lib/css';
 
 export function TaskDrawer({ children }: { children: ReactNode }) {
   const router = useRouter();
@@ -20,12 +21,13 @@ export function TaskDrawer({ children }: { children: ReactNode }) {
   return (
     <Dialog open={open} onOpenChange={(isOpen) => !isOpen && handleClose()}>
       <DialogContent
-        className="
-          min-h-[50dvh] sm:max-w-full sm:bottom-0 sm:top-auto sm:translate-y-0
-          sm:rounded-t-lg sm:rounded-b-none sm:w-full sm:max-h-[80vh] 
-          sm:flex sm:flex-col
-          transition-transform
-        "
+        className={cn(
+          'min-h-[50dvh]',
+          'sm:max-w-full sm:bottom-0 sm:top-auto sm:translate-y-0',
+          'sm:rounded-t-lg sm:rounded-b-none sm:w-full sm:max-h-[80vh]',
+          'sm:flex sm:flex-col',
+          'transition-transform'
+        )}
       >
         <DialogHeader className="flex-shrink-0">
           <DialogTitle>Задачи проекта</DialogTitle>

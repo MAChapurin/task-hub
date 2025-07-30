@@ -53,8 +53,8 @@ export function ProjectsStatistic() {
   return (
     <Card className="h-full w-full border-0">
       <CardHeader className="mb-2 flex items-center justify-between">
-        <h3 className="text-left text-2xl font-semibold text-[var(--foreground)]">
-          Projects Statistic
+        <h3 className="text-left text-3xl font-semibold text-[var(--foreground)]">
+          Статистика проектов
         </h3>
         <Select value={period} onValueChange={(value) => setPeriod(value as 'day' | 'year')}>
           <SelectTrigger>
@@ -110,39 +110,6 @@ export function ProjectsStatistic() {
           </ResponsiveContainer>
         </ChartContainer>
       </CardContent>
-
-      {/* <CardContent className="overflow-hidden">
-        <ChartContainer config={chartConfig} className="w-full h-[300px]">
-          <AreaChart width={undefined} height={300} data={data}>
-            <CartesianGrid vertical={false} />
-            <YAxis
-              width={30}
-              tick={{ fill: 'var(--foreground)' }}
-              axisLine={{ stroke: 'var(--muted)' }}
-              type="number"
-              domain={[0, 50]}
-              tickCount={6}
-              tickLine={false}
-            />
-            <XAxis
-              dataKey="period"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickFormatter={(value) => (period === 'year' ? value.slice(0, 3) : value)}
-              tick={{ fill: 'var(--foreground)' }}
-            />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
-            <Area
-              dataKey="projects"
-              type="natural"
-              fill="var(--chart-1)"
-              fillOpacity={0.4}
-              stroke="var(--chart-1)"
-            />
-          </AreaChart>
-        </ChartContainer>
-      </CardContent> */}
     </Card>
   );
 }
