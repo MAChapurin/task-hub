@@ -1,13 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerDescription,
-} from '@/shared/ui/drawer';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/shared/ui/dialog';
 import { ReactNode } from 'react';
 
 export function TaskDrawer({ children }: { children: ReactNode }) {
@@ -24,19 +18,20 @@ export function TaskDrawer({ children }: { children: ReactNode }) {
   };
 
   return (
-    <Drawer
-      open={open}
-      onOpenChange={(isOpen) => {
-        if (!isOpen) handleClose();
-      }}
-    >
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>Проект {projectId}</DrawerTitle>
-          <DrawerDescription>Контент проекта или подробности</DrawerDescription>
-        </DrawerHeader>
-        {children}
-      </DrawerContent>
-    </Drawer>
+    <Dialog open={open} onOpenChange={(isOpen) => !isOpen && handleClose()}>
+      <DialogContent
+        className="
+          min-h-[50dvh] sm:max-w-full sm:bottom-0 sm:top-auto sm:translate-y-0
+          sm:rounded-t-lg sm:rounded-b-none sm:w-full sm:max-h-[80vh] 
+          sm:flex sm:flex-col
+          transition-transform
+        "
+      >
+        <DialogHeader className="flex-shrink-0">
+          <DialogTitle>Задачи проекта</DialogTitle>
+        </DialogHeader>
+        <div className="flex-grow overflow-y-auto p-2">{children}</div>
+      </DialogContent>
+    </Dialog>
   );
 }

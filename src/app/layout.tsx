@@ -29,6 +29,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${poppins.className} scroll-smooth antialiased`}>
+        <div id="drag-overlay-root" />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem value={THEMES}>
           {children}
           <Toaster />

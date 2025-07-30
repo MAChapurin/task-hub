@@ -1,5 +1,5 @@
-import Link from "next/link";
-import React from "react";
+import Link from 'next/link';
+import React from 'react';
 
 export function BottomLink({
   linkText,
@@ -12,7 +12,7 @@ export function BottomLink({
 }) {
   return (
     <p className="text-sm text-primary/50">
-      {text}{" "}
+      {text}{' '}
       <Link href={url} className="font-medium text-primary hover:underline">
         {linkText}
       </Link>

@@ -8,15 +8,13 @@ import { Metadata } from 'next';
 import { matchEither } from '@/shared/lib/either';
 
 import { ProjectSection } from '@/widgets/project-list';
+import { ProjectTasksWidgetServer } from '@/widgets/project-tasks/ui/project-tasks-widget-server';
 import { TaskDrawer } from '@/widgets/project-tasks/ui/task-drawer';
-import { ProjectTasksWidgetServer } from '@/widgets/project-tasks/ui/project-tasks-widget';
 
 export const metadata: Metadata = {
   title: 'Dashboard',
   description: 'Dashboard for tasks',
 };
-
-export const dynamic = 'force-dynamic';
 
 type SearchParams = Promise<{ [key: string]: string | undefined }>;
 
@@ -76,6 +74,7 @@ export default async function DashboardPage(props: { searchParams: SearchParams 
         <TaskDrawer>
           <ProjectTasksWidgetServer projectId={projectId || ''} />
         </TaskDrawer>
+        {/* <ProjectTasksWidgetServer projectId={projectId || ''} /> */}
       </>
     ),
   });

@@ -21,7 +21,6 @@ import { EditProjectDialog } from '@/features/edit-project';
 import { DeleteProjectButton } from '@/features/delete-project/ui/delete-project-dialog';
 import { StatusBadge } from './status-badge';
 import { CreateTaskDialog } from '@/features/create-task';
-import { ClickCatcherWrapper } from './click-catcher-wrapper';
 import { Progress } from './progress';
 
 export const ProjectCard: FC<ProjectCardProps> = ({ project, currentUserId }) => {
@@ -35,39 +34,38 @@ export const ProjectCard: FC<ProjectCardProps> = ({ project, currentUserId }) =>
   };
 
   return (
-    <Card
-      onClick={handleCardClick}
-      className="transition-all duration-200 hover:scale-[1.02] hover:shadow-md hover:bg-muted/50 border border-transparent hover:border-primary cursor-pointer"
-    >
-      <CardHeader>
-        <div className="flex justify-between items-start">
-          <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground">
-            {project.icon}
+    <Card className="transition-all duration-200 hover:scale-[1.02] hover:shadow-md hover:bg-muted/50 border border-transparent hover:border-primary cursor-pointer">
+      <div onClick={handleCardClick}>
+        <CardHeader>
+          <div className="flex justify-between items-start">
+            <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground">
+              {project.icon}
+            </div>
+            <div className="flex -space-x-2">
+              {project.participants.map(({ user }) => (
+                <Avatar key={user.id}>
+                  <AvatarImage src={user.avatarUrl ?? ''} alt={user.name} />
+                  <AvatarFallback>{user.name[0]}</AvatarFallback>
+                </Avatar>
+              ))}
+            </div>
           </div>
-          <div className="flex -space-x-2">
-            {project.participants.map(({ user }) => (
-              <Avatar key={user.id}>
-                <AvatarImage src={user.avatarUrl ?? ''} alt={user.name} />
-                <AvatarFallback>{user.name[0]}</AvatarFallback>
-              </Avatar>
-            ))}
-          </div>
-        </div>
-        <CardTitle className="text-xl flex items-center justify-between">
-          {project.title}{' '}
-          <StatusBadge status={project.status as 'BACKLOG' | 'IN_PROGRESS' | 'DONE'} />
-        </CardTitle>
+          <CardTitle className="text-xl flex items-center justify-between">
+            {project.title}{' '}
+            <StatusBadge status={project.status as 'BACKLOG' | 'IN_PROGRESS' | 'DONE'} />
+          </CardTitle>
 
-        <CardDescription className="flex items-center gap-1 text-sm text-muted-foreground">
-          <CalendarDays className="w-4 h-4" />
-          {format(new Date(project.dueDate), 'dd MMM yyyy')}
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Progress value={0} />
-      </CardContent>
+          <CardDescription className="flex items-center gap-1 text-sm text-muted-foreground">
+            <CalendarDays className="w-4 h-4" />
+            {format(new Date(project.dueDate), 'dd MMM yyyy')}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Progress value={0} />
+        </CardContent>
+      </div>
       <CardFooter>
-        <ClickCatcherWrapper className="w-full flex items-center justify-between flex-wrap">
+        <div className="w-full flex items-center justify-between flex-wrap">
           <div className="flex items-center gap-2">
             <Button size="icon" variant="ghost">
               <MessageSquareText className="text-muted-foreground" /> 3
@@ -95,7 +93,7 @@ export const ProjectCard: FC<ProjectCardProps> = ({ project, currentUserId }) =>
               />
             )}
           </div>
-        </ClickCatcherWrapper>
+        </div>
       </CardFooter>
     </Card>
   );
