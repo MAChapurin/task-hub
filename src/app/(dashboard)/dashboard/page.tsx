@@ -10,6 +10,8 @@ import { matchEither } from '@/shared/lib/either';
 import { ProjectSection } from '@/widgets/project-list';
 import { ProjectTasksWidgetServer } from '@/widgets/project-tasks/ui/project-tasks-widget-server';
 import { TaskDrawer } from '@/widgets/project-tasks/ui/task-drawer';
+import { pluralize } from '@/shared/lib/pluralize';
+import { getUserTasks } from '@/entities/project/services/get-user-tasks';
 
 export const metadata: Metadata = {
   title: 'Dashboard',
@@ -30,6 +32,20 @@ export default async function DashboardPage(props: { searchParams: SearchParams 
   }
 
   const projectsResult = await getProjectsByUser(user.id);
+  const tasks = await getUserTasks(user.id);
+
+  const workingHours =
+    tasks.type === 'right'
+      ? tasks.value
+          .filter(
+            (el) =>
+              el.status === 'DONE' &&
+              typeof el.durationHours === 'number' &&
+              el.durationHours !== null
+          )
+          .reduce((sum, el) => sum + (el.durationHours ?? 0), 0)
+      : 0;
+
   const searchParams = await props.searchParams;
   const { projectId } = searchParams;
 
@@ -48,20 +64,24 @@ export default async function DashboardPage(props: { searchParams: SearchParams 
         <div className="flex flex-wrap xl:grid xl:grid-cols-3 gap-4 mb-4">
           <section className="flex flex-col gap-4 items-stretch w-full max-w-full">
             <Stats
-              title="Active Projects"
+              title={pluralize(projects.length, ['Проект', 'Проекта', 'Проектов'])}
               stats={String(projects.length)}
               src="/project-stats-icons/active-projects.svg"
               backgroundColor="bg-[var(--chart-1)]"
             />
             <Stats
-              title="On going Projects"
+              title={pluralize(35, ['Задача', 'Задачи', 'Задач'])}
               stats="35"
               src="/project-stats-icons/ongoing-projects.svg"
               backgroundColor="bg-[var(--chart-4)]"
             />
             <Stats
-              title="Working hours"
-              stats="19h 9m"
+              title={pluralize(Number(workingHours), [
+                'Рабочий час',
+                'Рабочих часа',
+                'Рабочих часов',
+              ])}
+              stats={String(workingHours)}
               src="/project-stats-icons/working-hours.svg"
               backgroundColor="bg-[var(--chart-3)]"
             />
@@ -74,7 +94,6 @@ export default async function DashboardPage(props: { searchParams: SearchParams 
         <TaskDrawer>
           <ProjectTasksWidgetServer projectId={projectId || ''} />
         </TaskDrawer>
-        {/* <ProjectTasksWidgetServer projectId={projectId || ''} /> */}
       </>
     ),
   });
