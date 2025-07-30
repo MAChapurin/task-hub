@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# В проекте не реализован чат, и подсчет прогресса(компонент готов, не успел в логику) и сортировка.
 
-## Getting Started
+# Тем не менее со скрипом на 80% заданий можно натянуть, надеюсь написанный бэк внутри некст компенсирует отсуствие части заданий, так как на его реализацию уходит очень много времени.
 
-First, run the development server:
+# Как это смотреть ?
+
+- Скрины в public/screens
+- В shared/ui ничего интересного, цель проекта потрогать shadcn
+- !!! Чтобы понять что происходит в проекте сначала найдите файл either.ts, @/shared/lib/either.ts
+- Затем смотрите сущности - это по сути бэк
+- После фичи, далее можно виджеты
+
+# Task Hub
+
+![Task Hub Logo](./public/logo.png)
+
+**Task Hub** — современное приложение для управления задачами и проектами, построенное на Next.js с использованием архитектуры FSD (Feature-Sliced Design) и Prisma.
+Цель — удобный и масштабируемый workspace для планирования и контроля задач.
+
+---
+
+## 🚀 Технологии и стек
+
+- **Next.js 15** — React-фреймворк с серверным рендерингом и статической генерацией
+- **TypeScript** — статическая типизация
+- **Prisma ORM** — работа с базой данных
+- **React** + **Radix UI** + **TailwindCSS** — UI и стилизация
+- **React Hook Form** + **Zod** — удобная валидация форм
+- **FSD (Feature-Sliced Design)** — модульная архитектура
+
+---
+
+## 📐 Архитектура
+
+### Feature-Sliced Design (FSD)
+
+Структура проекта организована по слоям:
+
+- **app/** — страницы и маршруты Next.js
+- **entities/** — доменные сущности (пользователи, проекты, задачи)
+- **features/** — бизнес-логика, объединяющая несколько сущностей
+- **widgets/** — переиспользуемые UI-компоненты и виджеты
+- **shared/** — утилиты, типы, стили, общие хелперы
+
+Каждая часть в entities делится на поддиректории `repositories`, `services`, `domain`, `server` и т.д. для изоляции логики.
+Каждая часть в features делится на поддиректории `actions`, `ui`, `model`, `types` и т.д. для изоляции логики и декомпозиции.
+
+---
+
+## 🌐 Взаимодействие с сервером
+
+- Серверные экшены — асинхронные функции в `entities/**/server` для работы с БД через Prisma
+- Вызов серверных функций напрямую из компонентов/страниц с `async/await` и из компонетов с помощью серверных экшенов
+- Обработка ошибок через тип `Either` и функцию `matchEither`
+
+---
+
+## 🛠 Скрипты
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev           # Запуск разработки с Turbopack
+npm run build         # Генерация Prisma Client и сборка проекта
+npm run start         # Запуск продакшн-сервера
+npm run lint          # Проверка кода ESLint
+npm run prettier      # Форматирование кода Prettier
+npm run prisma:seed   # Заполнение БД начальными данными
+npm run prisma:studio # Prisma Studio UI
+npm run prisma:push   # Применение схемы Prisma к БД
+npm run migrate:deploy # Развертывание миграций
+npm run migrate:reset # Сброс миграций и базы
+npm run deploy        # Полный цикл миграции и генерации клиента Prisma
+npm run generate      # Генерация Prisma Client
+
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
