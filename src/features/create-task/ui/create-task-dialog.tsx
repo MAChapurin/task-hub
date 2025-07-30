@@ -47,7 +47,11 @@ export function CreateTaskDialog({ projectId }: CreateTaskDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className={cn('w-12 h-12 rounded-full bg-chart-1')} variant="outline" size="sm">
+        <Button
+          className={cn('w-12 h-12 rounded-full bg-chart-1 cursor-pointer')}
+          variant="outline"
+          size="sm"
+        >
           <Plus className="text-background" />
         </Button>
       </DialogTrigger>

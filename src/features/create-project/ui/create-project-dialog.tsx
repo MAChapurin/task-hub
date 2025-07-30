@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { format } from 'date-fns';
 import { CalendarIcon, PlusCircle } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardContent } from '@/shared/ui/card';
 
 import {
   Dialog,
@@ -44,13 +45,22 @@ export function CreateProjectDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button
-          variant="ghost"
-          className="h-24 w-24 rounded-full p-0 flex items-center justify-center"
-        >
-          <PlusCircle className="min-h-24 min-w-24" />
-        </Button>
+      <DialogTrigger asChild className="gap-0">
+        <Card className="w-full text-center transition-all duration-200 hover:scale-[1.02] hover:shadow-md hover:bg-muted/50 border border-transparent hover:border-primary cursor-pointer">
+          <CardHeader>
+            <CardTitle className="text-lg">Создать новый проект</CardTitle>
+          </CardHeader>
+          <CardContent className="h-full flex flex-col items-center justify-center">
+            <div className="flex justify-center">
+              <Button
+                variant="ghost"
+                className="h-24 w-24 rounded-full p-0 flex items-center justify-center cursor-pointer"
+              >
+                <PlusCircle className="min-h-24 min-w-24" />
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       </DialogTrigger>
 
       <DialogContent>

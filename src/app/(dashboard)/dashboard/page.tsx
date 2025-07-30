@@ -8,13 +8,19 @@ import { Metadata } from 'next';
 import { matchEither } from '@/shared/lib/either';
 
 import { ProjectSection } from '@/widgets/project-list';
+import { TaskDrawer } from '@/widgets/project-tasks/ui/task-drawer';
+import { ProjectTasksWidgetServer } from '@/widgets/project-tasks/ui/project-tasks-widget';
 
 export const metadata: Metadata = {
   title: 'Dashboard',
   description: 'Dashboard for tasks',
 };
 
-export default async function DashboardPage() {
+export const dynamic = 'force-dynamic';
+
+type SearchParams = Promise<{ [key: string]: string | undefined }>;
+
+export default async function DashboardPage(props: { searchParams: SearchParams }) {
   const user = await getCurrentUser();
 
   if (!user) {
@@ -26,6 +32,8 @@ export default async function DashboardPage() {
   }
 
   const projectsResult = await getProjectsByUser(user.id);
+  const searchParams = await props.searchParams;
+  const { projectId } = searchParams;
 
   return matchEither(projectsResult, {
     left: (error) => (
@@ -65,6 +73,9 @@ export default async function DashboardPage() {
           </section>
         </div>
         <ProjectSection projects={projects} currentUserId={user.id} />
+        <TaskDrawer>
+          <ProjectTasksWidgetServer projectId={projectId || ''} />
+        </TaskDrawer>
       </>
     ),
   });

@@ -1,4 +1,7 @@
+'use client';
+
 import { FC } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Card,
   CardHeader,
@@ -9,21 +12,33 @@ import {
 } from '@/shared/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 
-import { BookImage, CalendarDays, Link, MessageSquareText } from 'lucide-react';
+import { BookImage, CalendarDays, Link as LinkIcon, MessageSquareText } from 'lucide-react';
 import { format } from 'date-fns';
 import { Button } from '@/shared/ui/button';
 
-import { Progress } from './progress';
 import { ProjectCardProps } from '../types/project-list.types';
 import { EditProjectDialog } from '@/features/edit-project';
 import { DeleteProjectButton } from '@/features/delete-project/ui/delete-project-dialog';
 import { StatusBadge } from './status-badge';
 import { CreateTaskDialog } from '@/features/create-task';
+import { ClickCatcherWrapper } from './click-catcher-wrapper';
+import { Progress } from './progress';
 
 export const ProjectCard: FC<ProjectCardProps> = ({ project, currentUserId }) => {
+  const router = useRouter();
   const isOwner = project.ownerId === currentUserId;
+
+  const handleCardClick = () => {
+    const params = new URLSearchParams(window.location.search);
+    params.set('projectId', project.id);
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
+
   return (
-    <Card>
+    <Card
+      onClick={handleCardClick}
+      className="transition-all duration-200 hover:scale-[1.02] hover:shadow-md hover:bg-muted/50 border border-transparent hover:border-primary cursor-pointer"
+    >
       <CardHeader>
         <div className="flex justify-between items-start">
           <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground">
@@ -51,31 +66,36 @@ export const ProjectCard: FC<ProjectCardProps> = ({ project, currentUserId }) =>
       <CardContent>
         <Progress value={0} />
       </CardContent>
-      <CardFooter className="flex items-center justify-between flex-wrap">
-        <div className="flex items-center gap-2">
-          <Button size="icon" variant="ghost">
-            <MessageSquareText className="text-muted-foreground" /> 3
-          </Button>
-          <Button size="icon" variant="ghost">
-            <BookImage className="text-muted-foreground" /> 6
-          </Button>
-          <Button size="icon" variant="ghost">
-            <Link className="text-muted-foreground" /> 3
-          </Button>
-        </div>
-        <div className="flex items-center gap-2 ml-auto">
-          <CreateTaskDialog projectId={project.id} />
-          <EditProjectDialog
-            project={{ ...project, status: project.status as 'BACKLOG' | 'IN_PROGRESS' | 'DONE' }}
-          />
-          {isOwner && (
-            <DeleteProjectButton
-              projectId={project.id}
-              ownerId={project.ownerId}
-              currentUserId={currentUserId}
+      <CardFooter>
+        <ClickCatcherWrapper className="w-full flex items-center justify-between flex-wrap">
+          <div className="flex items-center gap-2">
+            <Button size="icon" variant="ghost">
+              <MessageSquareText className="text-muted-foreground" /> 3
+            </Button>
+            <Button size="icon" variant="ghost">
+              <BookImage className="text-muted-foreground" /> 6
+            </Button>
+            <Button size="icon" variant="ghost">
+              <LinkIcon className="text-muted-foreground" /> 3
+            </Button>
+          </div>
+          <div className="flex items-center gap-2 ml-auto">
+            <CreateTaskDialog projectId={project.id} />
+            <EditProjectDialog
+              project={{
+                ...project,
+                status: project.status as 'BACKLOG' | 'IN_PROGRESS' | 'DONE',
+              }}
             />
-          )}
-        </div>
+            {isOwner && (
+              <DeleteProjectButton
+                projectId={project.id}
+                ownerId={project.ownerId}
+                currentUserId={currentUserId}
+              />
+            )}
+          </div>
+        </ClickCatcherWrapper>
       </CardFooter>
     </Card>
   );

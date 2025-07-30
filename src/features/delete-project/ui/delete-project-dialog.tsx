@@ -1,4 +1,3 @@
-// DeleteProjectButton.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -51,7 +50,7 @@ export function DeleteProjectButton({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          className="w-12 h-12 rounded-full"
+          className="w-12 h-12 rounded-full cursor-pointer"
           variant="destructive"
           size="sm"
           aria-label="Удалить проект"
@@ -79,7 +78,7 @@ export function DeleteProjectButton({
               e.preventDefault();
               const formData = new FormData();
               formData.set('id', projectId);
-              await dispatch(formData);
+              dispatch(formData);
             }}
           >
             <Button type="submit" variant="destructive" disabled={isPending}>

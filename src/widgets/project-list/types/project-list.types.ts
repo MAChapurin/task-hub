@@ -15,3 +15,8 @@ export type ProjectListProps = {
   projects: ProjectWithParticipants[];
   currentUserId: string;
 };
+
+export interface ClickCatcherWrapperProps {
+  children: React.ReactNode;
+  className?: string;
+}

@@ -59,7 +59,7 @@ export function EditProjectDialog({ project }: EditProjectDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-12 h-12 rounded-full" variant="outline" size="sm">
+        <Button className="w-12 h-12 rounded-full cursor-pointer" variant="outline" size="sm">
           <Pencil />
         </Button>
       </DialogTrigger>
@@ -81,7 +81,6 @@ export function EditProjectDialog({ project }: EditProjectDialogProps) {
           }}
           className="grid gap-4"
         >
-          {/* Название */}
           <div className="grid gap-2">
             <Label htmlFor="title">Название</Label>
             <Input
@@ -94,8 +93,6 @@ export function EditProjectDialog({ project }: EditProjectDialogProps) {
               <p className="text-sm text-red-500">{formState.errors.title}</p>
             )}
           </div>
-
-          {/* Дата + Логотип */}
           <div className="grid gap-2">
             <div className="flex gap-2">
               <div className="flex-1">
