@@ -30,9 +30,9 @@ export function UserSearch({ users, currentUserId, onSelect }: UserSearchProps) 
       />
 
       {filteredUsers.length === 0 ? (
-        <p className="text-gray-500">Пользователи не найдены</p>
+        <p className="">Пользователи не найдены</p>
       ) : (
-        <ul className="max-h-60 overflow-auto border rounded">
+        <ul className="max-h-full overflow-auto border rounded">
           {filteredUsers.map((user) => (
             <li
               key={user.id}

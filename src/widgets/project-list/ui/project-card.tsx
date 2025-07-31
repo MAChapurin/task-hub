@@ -24,7 +24,7 @@ import { CreateTaskDialog } from '@/features/create-task';
 import { Progress } from './progress';
 import { PATHNAMES } from '@/shared/constants/pathnames';
 
-export const ProjectCard: FC<ProjectCardProps> = ({ project, currentUserId }) => {
+export const ProjectCard: FC<ProjectCardProps> = ({ project, currentUserId, progress }) => {
   const router = useRouter();
   const isOwner = project.ownerId === currentUserId;
 
@@ -60,7 +60,7 @@ export const ProjectCard: FC<ProjectCardProps> = ({ project, currentUserId }) =>
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Progress value={0} />
+          <Progress value={progress} />
         </CardContent>
       </div>
       <CardFooter>

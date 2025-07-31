@@ -31,9 +31,6 @@ export function ChatBox({ currentUserId, otherUserId, initialMessages }: ChatBox
     if (ev.type === 'new-message') {
       setMessages((prev) => {
         const newMessages = [...prev, ev.payload];
-        newMessages.sort(
-          (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-        );
         return newMessages;
       });
     }
@@ -49,9 +46,11 @@ export function ChatBox({ currentUserId, otherUserId, initialMessages }: ChatBox
   return (
     <div className="flex flex-col h-full p-4 border rounded-lg shadow-sm overflow-y-auto">
       <div className="flex-1 overflow-y-auto space-y-2">
-        {messages.map((m) => (
-          <MessageBubble key={m.id} message={m} isOwn={m.senderId === currentUserId} />
-        ))}
+        {messages
+          .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+          .map((m) => (
+            <MessageBubble key={m.id} message={m} isOwn={m.senderId === currentUserId} />
+          ))}
         <div ref={bottomRef} />
       </div>
       <SendMessageForm receiverId={otherUserId} />

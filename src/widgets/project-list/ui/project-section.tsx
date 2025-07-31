@@ -10,7 +10,7 @@ import { ProjectListProps } from '../types/project-list.types';
 import { FC } from 'react';
 import { ProjectList } from './project-list';
 
-export const ProjectSection: FC<ProjectListProps> = ({ projects, currentUserId }) => {
+export const ProjectSection: FC<ProjectListProps> = ({ projects, currentUserId, tasks }) => {
   return (
     <section className="mb-8">
       <h2 className="text-xl font-bold mb-4">Мои проекты ({projects.length})</h2>
@@ -24,24 +24,27 @@ export const ProjectSection: FC<ProjectListProps> = ({ projects, currentUserId }
 
         <TabsContents className="rounded-sm h-full bg-background">
           <TabsContent value={TAB_VALUES.ALL} className="space-y-2 md:space-y-6">
-            <ProjectList projects={projects} currentUserId={currentUserId} />
+            <ProjectList projects={projects} currentUserId={currentUserId} tasks={tasks} />
           </TabsContent>
           <TabsContent value={TAB_VALUES.BACKLOG} className="space-y-2 p-2 md:space-y-6">
             <ProjectList
               projects={projects.filter((el) => el.status === 'BACKLOG')}
               currentUserId={currentUserId}
+              tasks={tasks}
             />
           </TabsContent>
           <TabsContent value={TAB_VALUES.IN_PROGRESS} className="space-y-2 p-2 md:space-y-6">
             <ProjectList
               projects={projects.filter((el) => el.status === 'IN_PROGRESS')}
               currentUserId={currentUserId}
+              tasks={tasks}
             />
           </TabsContent>
           <TabsContent value={TAB_VALUES.DONE} className="space-y-2 p-2 md:space-y-6">
             <ProjectList
               projects={projects.filter((el) => el.status === 'DONE')}
               currentUserId={currentUserId}
+              tasks={tasks}
             />
           </TabsContent>
         </TabsContents>

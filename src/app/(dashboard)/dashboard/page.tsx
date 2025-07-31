@@ -29,7 +29,7 @@ export default async function DashboardPage() {
     right: (p) => p,
   });
 
-  const doneTasks = matchEither(tasksResult, {
+  const tasks = matchEither(tasksResult, {
     left: () => [],
     right: (t) => t,
   });
@@ -56,10 +56,10 @@ export default async function DashboardPage() {
       <DashboardStats
         activeTasks={inProgressTasks.length}
         projectsCount={projects.length}
-        workingHours={calculateWorkingHours(doneTasks)}
+        workingHours={calculateWorkingHours(tasks)}
         stats={stats}
       />
-      <ProjectSection projects={projects} currentUserId={user.id} />
+      <ProjectSection projects={projects} currentUserId={user.id} tasks={tasks} />
       <TodayTasksWidget tasks={inProgressTasks} />
     </div>
   );
