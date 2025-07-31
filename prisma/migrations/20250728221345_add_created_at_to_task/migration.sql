@@ -1,9 +1,0 @@
--- CreateEnum
-CREATE TYPE "TaskStatus" AS ENUM ('BACKLOG', 'IN_PROGRESS', 'DONE');
-
--- AlterTable
-ALTER TABLE "Task" ADD COLUMN     "completedAt" TIMESTAMP(3),
-ADD COLUMN     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-ADD COLUMN     "durationHours" DOUBLE PRECISION,
-ADD COLUMN     "startDate" TIMESTAMP(3),
-ADD COLUMN     "status" "TaskStatus" NOT NULL DEFAULT 'BACKLOG';

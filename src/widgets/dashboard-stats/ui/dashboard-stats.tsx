@@ -3,7 +3,12 @@ import { Stats } from '@/shared/ui/stats';
 import { ProjectsStatistic } from '@/widgets/projects-statistic';
 import { DashboardStatsProps } from '../types/dashboard-stats.props';
 
-export function DashboardStats({ activeTasks, projectsCount, workingHours }: DashboardStatsProps) {
+export function DashboardStats({
+  activeTasks,
+  projectsCount,
+  workingHours,
+  stats,
+}: DashboardStatsProps) {
   return (
     <div className="flex flex-wrap xl:grid xl:grid-cols-3 gap-4 mb-4">
       <section className="flex flex-col gap-4 items-stretch w-full max-w-full">
@@ -31,7 +36,7 @@ export function DashboardStats({ activeTasks, projectsCount, workingHours }: Das
       </section>
       <section className="xl:col-span-2 min-h-105 w-full">
         <h2 className="sr-only">Статистика количества проектов по дням и месяцам</h2>
-        <ProjectsStatistic />
+        <ProjectsStatistic stats={stats} />
       </section>
     </div>
   );

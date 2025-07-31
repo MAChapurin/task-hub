@@ -14,7 +14,8 @@
     "migrate:deploy": "npx prisma migrate deploy",
     "migrate:reset": "npx prisma migrate reset",
     "deploy": "npm run migrate:deploy && npm run generate",
-    "generate": "prisma generate"
+    "generate": "prisma generate",
+     "log:project-stats": "tsx scripts/run-log-daily-project-stats.ts"
   },
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-beta.1",

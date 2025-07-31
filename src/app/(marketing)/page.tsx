@@ -1,8 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 import { Button } from '@/shared/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card';
-import { HeaderMarketing } from '@/widgets';
-import { FAQAccordionSection } from '@/widgets/faq-section';
+import { HeaderMarketing, FAQAccordionSection } from '@/widgets';
 
 import {
   ArrowRightIcon,
@@ -61,8 +60,6 @@ export default function MarketingPage() {
             </div>
           </div>
         </section>
-
-        {/* Features Section */}
         <section id="about" className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-950">
           <div className="container px-4 md:px-6 mx-auto max-w-400">
             <div className="flex flex-col items-center justify-center space-y-8 text-center">
@@ -190,8 +187,6 @@ export default function MarketingPage() {
             </div>
           </div>
         </section>
-
-        {/* Testimonials Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-950">
           <div className="container px-4 md:px-6 mx-auto max-w-400">
             <div className="flex flex-col items-center justify-center space-y-8 text-center">

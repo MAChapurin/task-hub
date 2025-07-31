@@ -1,15 +1,19 @@
 import { getInProgressUserTasks, getProjectsByUser, getUserTasks } from '@/entities/project/server';
 import { getCurrentUser } from '@/entities/user/server';
 
-import { ProjectSection } from '@/widgets/project-list';
-import { TodayTasksWidget } from '@/widgets/today-task/ui/today-task';
-import { ProjectTasksWidgetServer } from '@/widgets/project-tasks/ui/project-tasks-widget-server';
 import { TaskDrawer } from '@/widgets/project-tasks/ui/task-drawer';
 
 import { matchEither } from '@/shared/lib/either';
 
 import { Metadata } from 'next';
-import { DashboardStats } from '@/widgets/dashboard-stats';
+import { getUserProjectStat } from '@/entities/user-project-stat/server';
+
+import {
+  DashboardStats,
+  ProjectSection,
+  ProjectTasksWidgetServer,
+  TodayTasksWidget,
+} from '@/widgets';
 
 export const metadata: Metadata = {
   title: 'Проекты',
@@ -24,10 +28,11 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
   const user = await getCurrentUser();
   if (!user) return <UserNotFound />;
 
-  const [projectsResult, tasksResult, inProgressTasksResult] = await Promise.all([
+  const [projectsResult, tasksResult, inProgressTasksResult, statsResult] = await Promise.all([
     getProjectsByUser(user.id),
     getUserTasks(user.id),
     getInProgressUserTasks(user.id),
+    getUserProjectStat(user.id),
   ]);
 
   const params = await searchParams;
@@ -48,6 +53,14 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
             })}
             projectsCount={projects.length}
             workingHours={workingHours}
+            stats={matchEither(statsResult, {
+              left: () => [],
+              right: (stats) =>
+                stats.map((stat) => ({
+                  ...stat,
+                  date: new Date(stat.date),
+                })),
+            })}
           />
 
           <ProjectSection projects={projects} currentUserId={user.id} />

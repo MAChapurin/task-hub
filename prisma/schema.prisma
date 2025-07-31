@@ -19,6 +19,7 @@ model User {
 
   ownedProjects       Project[]            @relation("UserOwnedProjects")
   projectParticipants ProjectParticipant[]
+  stats               UserProjectStat[]
 }
 
 model Project {
@@ -61,4 +62,15 @@ model ProjectParticipant {
   project Project @relation(fields: [projectId], references: [id])
 
   @@id([userId, projectId])
+}
+
+model UserProjectStat {
+  id       String   @id @default(cuid())
+  userId   String
+  date     DateTime @default(now())
+  projects Int
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, date])
 }
