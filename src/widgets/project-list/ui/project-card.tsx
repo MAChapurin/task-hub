@@ -22,15 +22,14 @@ import { DeleteProjectButton } from '@/features/delete-project/ui/delete-project
 import { StatusBadge } from './status-badge';
 import { CreateTaskDialog } from '@/features/create-task';
 import { Progress } from './progress';
+import { PATHNAMES } from '@/shared/constants/pathnames';
 
 export const ProjectCard: FC<ProjectCardProps> = ({ project, currentUserId }) => {
   const router = useRouter();
   const isOwner = project.ownerId === currentUserId;
 
   const handleCardClick = () => {
-    const params = new URLSearchParams(window.location.search);
-    params.set('projectId', project.id);
-    router.push(`?${params.toString()}`, { scroll: false });
+    router.push(PATHNAMES.DASHBOARD + `/${project.id}`);
   };
 
   return (

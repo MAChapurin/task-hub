@@ -4,6 +4,7 @@ import { pluralize } from '@/shared/lib/pluralize';
 import { Badge } from '@/shared/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card';
 import { Task } from '../types';
+import { DeleteTaskDialog } from '@/features/delete-task';
 
 type TaskCardProps = {
   task: Task;
@@ -13,8 +14,9 @@ type TaskCardProps = {
 export function TaskCard({ task, isOverlay = false }: TaskCardProps) {
   return (
     <Card className={isOverlay ? 'cursor-grabbing' : ''}>
-      <CardHeader className="pb-2">
+      <CardHeader className="pb-2 flex items-center justify-between">
         <CardTitle className="text-base">{task.title}</CardTitle>
+        <DeleteTaskDialog taskId={task.id} />
       </CardHeader>
       <CardContent className="pt-0">
         <div className="flex flex-wrap gap-1 text-xs">

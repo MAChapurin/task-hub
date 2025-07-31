@@ -13,15 +13,23 @@ import {
 
 import Link from 'next/link';
 
-import { MAIN_MENU, projects } from '../config';
+import { MAIN_MENU } from '../config';
+import { ProjectWithParticipants } from '@/entities/project/domain';
+import { PATHNAMES } from '@/shared/constants/pathnames';
 
-export function AppSidebar({ accountSlot }: { accountSlot: React.ReactNode }) {
+export function AppSidebar({
+  accountSlot,
+  projects,
+}: {
+  accountSlot: React.ReactNode;
+  projects: ProjectWithParticipants[] | null;
+}) {
   return (
     <Sidebar>
       <SidebarContent>
         {accountSlot}
         <SidebarGroup>
-          <SidebarGroupLabel>Main menu</SidebarGroupLabel>
+          <SidebarGroupLabel>Основное меню</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {MAIN_MENU.map((item) => (
@@ -38,15 +46,16 @@ export function AppSidebar({ accountSlot }: { accountSlot: React.ReactNode }) {
           </SidebarGroupContent>
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarGroupLabel>Projects</SidebarGroupLabel>
+          <SidebarGroupLabel>Проекты</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {projects.map((item) => (
-                <SidebarMenuItem key={item.title}>
+              {projects?.map((item) => (
+                <SidebarMenuItem key={item.id}>
                   <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <div className="w-2 h-2" style={{ background: item.color }} />
-                      <span>{item.title}</span>
+                    <Link href={PATHNAMES.DASHBOARD + '/' + item.id}>
+                      <span>
+                        {item.icon} {item.title}
+                      </span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

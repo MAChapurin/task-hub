@@ -1,30 +1,19 @@
-import { getInProgressUserTasks, getProjectsByUser, getUserTasks } from '@/entities/project/server';
-import { getCurrentUser } from '@/entities/user/server';
+import { Metadata } from 'next';
 
-import { TaskDrawer } from '@/widgets/project-tasks/ui/task-drawer';
+import { getCurrentUser } from '@/entities/user/server';
+import { getProjectsByUser, getInProgressUserTasks, getUserTasks } from '@/entities/project/server';
+import { getUserProjectStat } from '@/entities/user-project-stat/server';
 
 import { matchEither } from '@/shared/lib/either';
 
-import { Metadata } from 'next';
-import { getUserProjectStat } from '@/entities/user-project-stat/server';
-
-import {
-  DashboardStats,
-  ProjectSection,
-  ProjectTasksWidgetServer,
-  TodayTasksWidget,
-} from '@/widgets';
+import { DashboardStats, ProjectSection, TodayTasksWidget } from '@/widgets';
 
 export const metadata: Metadata = {
   title: 'Проекты',
   description: 'Проекты для задач',
 };
 
-interface DashboardPageProps {
-  searchParams: Promise<{ [key: string]: string | undefined }>;
-}
-
-export default async function DashboardPage({ searchParams }: DashboardPageProps) {
+export default async function DashboardPage() {
   const user = await getCurrentUser();
   if (!user) return <UserNotFound />;
 
@@ -35,60 +24,51 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
     getUserProjectStat(user.id),
   ]);
 
-  const params = await searchParams;
-  const projectId = params.projectId || '';
-
-  return matchEither(projectsResult, {
-    left: (error) => <ProjectFetchError error={error} />,
-    right: (projects) => {
-      const workingHours = calculateWorkingHours(tasksResult);
-      return (
-        <div>
-          <h1 className="font-semibold text-4xl w-fit mb-4">Проекты</h1>
-
-          <DashboardStats
-            activeTasks={matchEither(inProgressTasksResult, {
-              left: () => 0,
-              right: (tasks) => tasks.length,
-            })}
-            projectsCount={projects.length}
-            workingHours={workingHours}
-            stats={matchEither(statsResult, {
-              left: () => [],
-              right: (stats) =>
-                stats.map((stat) => ({
-                  ...stat,
-                  date: new Date(stat.date),
-                })),
-            })}
-          />
-
-          <ProjectSection projects={projects} currentUserId={user.id} />
-
-          {matchEither(inProgressTasksResult, {
-            left: () => (
-              <div className="text-red-600 mt-4 ml-2">Ошибка загрузки задач в работе</div>
-            ),
-            right: (tasks) => <TodayTasksWidget tasks={tasks} />,
-          })}
-
-          <TaskDrawer>
-            <ProjectTasksWidgetServer projectId={projectId} />
-          </TaskDrawer>
-        </div>
-      );
-    },
+  const projects = matchEither(projectsResult, {
+    left: () => null,
+    right: (p) => p,
   });
+
+  const doneTasks = matchEither(tasksResult, {
+    left: () => [],
+    right: (t) => t,
+  });
+
+  const inProgressTasks = matchEither(inProgressTasksResult, {
+    left: () => [],
+    right: (t) => t,
+  });
+
+  const stats = matchEither(statsResult, {
+    left: () => [],
+    right: (s) =>
+      s.map((stat) => ({
+        ...stat,
+        date: new Date(stat.date),
+      })),
+  });
+
+  if (!projects) return <ProjectFetchError error="unknown-error" />;
+
+  return (
+    <div>
+      <h1 className="font-semibold text-4xl w-fit mb-4">Проекты</h1>
+      <DashboardStats
+        activeTasks={inProgressTasks.length}
+        projectsCount={projects.length}
+        workingHours={calculateWorkingHours(doneTasks)}
+        stats={stats}
+      />
+      <ProjectSection projects={projects} currentUserId={user.id} />
+      <TodayTasksWidget tasks={inProgressTasks} />
+    </div>
+  );
 }
 
-function calculateWorkingHours(tasksResult: Awaited<ReturnType<typeof getUserTasks>>): number {
-  return matchEither(tasksResult, {
-    left: () => 0,
-    right: (tasks) =>
-      tasks
-        .filter((task) => task.status === 'DONE' && typeof task.durationHours === 'number')
-        .reduce((sum, task) => sum + (task.durationHours ?? 0), 0),
-  });
+function calculateWorkingHours(tasks: { status: string; durationHours?: number | null }[]): number {
+  return tasks
+    .filter((task) => task.status === 'DONE' && typeof task.durationHours === 'number')
+    .reduce((sum, task) => sum + (task.durationHours ?? 0), 0);
 }
 
 function ProjectFetchError({ error }: { error: string }) {

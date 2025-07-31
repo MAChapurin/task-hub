@@ -6,7 +6,18 @@ export const projectRepository = {
     prisma.project.findUnique({
       where: { id },
       include: {
-        owner: true,
+        owner: {
+          select: {
+            id: true,
+            name: true,
+            surname: true,
+            avatarUrl: true,
+            email: true,
+            login: true,
+            passwordHash: true,
+            salt: true,
+          },
+        },
         participants: {
           include: {
             user: {
@@ -15,6 +26,7 @@ export const projectRepository = {
                 name: true,
                 surname: true,
                 avatarUrl: true,
+                email: true,
               },
             },
           },
@@ -29,7 +41,7 @@ export const projectRepository = {
         owner: true,
         participants: {
           include: {
-            user: { select: { id: true, name: true, surname: true, avatarUrl: true } },
+            user: { select: { id: true, name: true, surname: true, avatarUrl: true, email: true } },
           },
         },
       },

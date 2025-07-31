@@ -12,6 +12,8 @@ import { cookies } from 'next/headers';
 import { AppSidebar, AsidePanel, Header } from '@/widgets';
 import { getCurrentUser } from '@/entities/user/server';
 import { UserAccountClient } from '@/features/account/ui/user-account-client';
+import { getProjectsByUser } from '@/entities/project/server';
+import { matchEither } from '@/shared/lib/either';
 
 const SITE_NAME = 'Task Hub';
 
@@ -29,6 +31,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const user = await getCurrentUser();
+  const projectsResult = await getProjectsByUser(user?.id || '');
+  const projects = matchEither(projectsResult, {
+    left: () => null,
+    right: (p) => p,
+  });
 
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get('sidebar_state')?.value === 'true';
@@ -36,9 +43,10 @@ export default async function RootLayout({
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar
+        projects={projects}
         accountSlot={
           <SidebarGroup>
-            <SidebarGroupLabel>Account</SidebarGroupLabel>
+            <SidebarGroupLabel>Аккаунт</SidebarGroupLabel>
             <SidebarGroupContent>
               <UserAccountClient
                 email={user?.email || ''}
@@ -52,7 +60,9 @@ export default async function RootLayout({
         <div className="xl:flex">
           <div className="md:grow">
             <Header />
-            <main className="p-4">{children}</main>
+            <main className="p-4" role="main">
+              {children}
+            </main>
           </div>
           <AsidePanel />
         </div>

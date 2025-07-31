@@ -11,12 +11,12 @@ import { PATHNAMES } from '@/shared/constants/pathnames';
 
 export const MAIN_MENU = [
   {
-    title: 'Dashboard',
+    title: 'Главная',
     url: PATHNAMES.DASHBOARD,
     icon: Grid2x2,
   },
   {
-    title: 'Message',
+    title: 'Сообщения',
     url: PATHNAMES.MESSAGE,
     icon: MessageCircleMore,
   },
@@ -26,22 +26,22 @@ export const MAIN_MENU = [
     icon: ChartNoAxesColumnDecreasing,
   },
   {
-    title: 'Team',
+    title: 'Команда',
     url: PATHNAMES.TEAM,
     icon: Users,
   },
   {
-    title: 'Schedule',
+    title: 'Календарь',
     url: PATHNAMES.SCHEDULE,
     icon: Calendar,
   },
   {
-    title: 'Report',
+    title: 'Отчеты',
     url: PATHNAMES.REPORT,
     icon: Notebook,
   },
   {
-    title: 'Settings',
+    title: 'Настройки',
     url: PATHNAMES.SETTINGS,
     icon: Settings,
   },

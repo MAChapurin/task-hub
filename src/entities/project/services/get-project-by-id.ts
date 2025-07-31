@@ -6,6 +6,11 @@ export const getProjectById = async (
   id: string
 ): Promise<Either<'project-not-found' | 'unknown-error', ProjectWithParticipants>> => {
   try {
+    if (!id) {
+      console.warn('Пустой ID проекта передан в getProjectById');
+      return left('project-not-found');
+    }
+
     const project = await projectRepository.getById(id);
 
     if (!project) {
@@ -14,7 +19,7 @@ export const getProjectById = async (
 
     return right(project);
   } catch (error) {
-    console.error('Ошибка при получении проекта по ID:', error);
+    console.error(`Ошибка при получении проекта по ID "${id}":`, error);
     return left('unknown-error');
   }
 };

@@ -1,7 +1,7 @@
 import { getProjectById } from '@/entities/project/services/get-project-by-id';
 import { getTasksByProject } from '@/entities/task/services/get-tasks-by-project';
 import { matchEither } from '@/shared/lib/either';
-import { ProjectTasksWidgetClient } from './project-tasks-widget-client';
+import { ProjectTasksWidgetClientWrapper } from './project-tasks-widget-client-wrapper';
 
 export async function ProjectTasksWidgetServer({ projectId }: { projectId: string }) {
   const projectRes = await getProjectById(projectId);
@@ -21,5 +21,5 @@ export async function ProjectTasksWidgetServer({ projectId }: { projectId: strin
     completedAt: task.completedAt ? task.completedAt.toISOString() : null,
   }));
 
-  return <ProjectTasksWidgetClient initialTasks={serializedTasks} />;
+  return <ProjectTasksWidgetClientWrapper initialTasks={serializedTasks} />;
 }
