@@ -29,4 +29,10 @@ class SSEHub {
   }
 }
 
-export const sseHub = new SSEHub();
+const globalWithSseHub = globalThis as typeof globalThis & { sseHub?: SSEHub };
+
+export const sseHub = globalWithSseHub.sseHub ?? new SSEHub();
+
+if (process.env.NODE_ENV !== 'production') {
+  globalWithSseHub.sseHub = sseHub;
+}

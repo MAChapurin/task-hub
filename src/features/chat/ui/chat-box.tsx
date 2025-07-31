@@ -27,8 +27,15 @@ export function ChatBox({ currentUserId, otherUserId, initialMessages }: ChatBox
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   useEventsSource<ChatEvent>(`/api/sse/chat?channel=chat:${currentUserId}`, (ev) => {
+    console.log('SSE event received:', ev);
     if (ev.type === 'new-message') {
-      setMessages((prev) => [...prev, ev.payload]);
+      setMessages((prev) => {
+        const newMessages = [...prev, ev.payload];
+        newMessages.sort(
+          (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        );
+        return newMessages;
+      });
     }
   });
 

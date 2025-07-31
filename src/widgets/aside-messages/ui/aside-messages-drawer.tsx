@@ -9,7 +9,7 @@ import {
   DrawerTrigger,
 } from '@/shared/ui/drawer';
 import React from 'react';
-import { AsidePanel } from './aside-panel';
+// import { AsidePanel } from './aside-panel';
 import { MessageCircleMore } from 'lucide-react';
 
 export function AsideMessagesDrawer() {
@@ -25,7 +25,7 @@ export function AsideMessagesDrawer() {
           <DrawerHeader className="hidden">
             <DrawerTitle>Messages</DrawerTitle>
           </DrawerHeader>
-          <AsidePanel className="w-full block" />
+          {/* <AsidePanel className="w-full block" /> */}
         </DrawerContent>
       </Drawer>
     </div>

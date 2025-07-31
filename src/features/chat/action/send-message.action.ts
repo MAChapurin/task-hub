@@ -40,5 +40,13 @@ export const sendMessageAction = async (
     payload: messagePayload,
   });
 
+  sseHub.broadcast(`chat:${user.id}`, {
+    type: 'new-message',
+    payload: messagePayload,
+  });
+
+  console.log('Broadcasting to:', `chat:${receiverId}`, `chat:${user.id}`);
+  console.log('Message:', messagePayload);
+
   return {};
 };

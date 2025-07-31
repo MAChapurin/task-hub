@@ -8,9 +8,17 @@ export async function GET(req: NextRequest) {
 
   const { response, write, close } = sseStream(req);
 
+  write({ type: 'connected', timestamp: Date.now() });
+
   const unsubscribe = sseHub.subscribe(channel, write);
 
+  const keepAliveId = setInterval(() => {
+    write({ type: 'keep-alive', timestamp: Date.now() });
+  }, 20000);
+
   req.signal.addEventListener('abort', () => {
+    console.log('SSE client disconnected');
+    clearInterval(keepAliveId);
     unsubscribe();
     close();
   });
