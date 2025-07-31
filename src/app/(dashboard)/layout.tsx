@@ -60,7 +60,7 @@ export default async function RootLayout({
         <div className="xl:flex">
           <div className="md:grow">
             <Header />
-            <main className="p-4" role="main">
+            <main className="p-4 grow" role="main">
               {children}
             </main>
           </div>

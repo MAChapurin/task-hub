@@ -20,6 +20,8 @@ model User {
   ownedProjects       Project[]            @relation("UserOwnedProjects")
   projectParticipants ProjectParticipant[]
   stats               UserProjectStat[]
+  sentMessages        Message[]            @relation("SentMessages")
+  receivedMessages    Message[]            @relation("ReceivedMessages")
 }
 
 model Project {
@@ -73,4 +75,16 @@ model UserProjectStat {
   user User @relation(fields: [userId], references: [id])
 
   @@unique([userId, date])
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+
+  senderId   String
+  receiverId String
+
+  sender   User @relation("SentMessages", fields: [senderId], references: [id])
+  receiver User @relation("ReceivedMessages", fields: [receiverId], references: [id])
 }
