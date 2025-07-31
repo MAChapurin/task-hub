@@ -9,9 +9,7 @@ import { TaskDrawer } from '@/widgets/project-tasks/ui/task-drawer';
 import { matchEither } from '@/shared/lib/either';
 
 import { Metadata } from 'next';
-import { Stats } from '@/shared/ui/stats';
-import { pluralize } from '@/shared/lib/pluralize';
-import { ProjectsStatistic } from '@/widgets';
+import { DashboardStats } from '@/widgets/dashboard-stats';
 
 export const metadata: Metadata = {
   title: 'Проекты',
@@ -32,28 +30,51 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
     getInProgressUserTasks(user.id),
   ]);
 
-  const workingHours = calculateWorkingHours(tasksResult);
   const params = await searchParams;
   const projectId = params.projectId || '';
 
   return matchEither(projectsResult, {
     left: (error) => <ProjectFetchError error={error} />,
-    right: (projects) => (
-      <>
-        <DashboardStats projectsCount={projects.length} workingHours={workingHours} />
-        <ProjectSection projects={projects} currentUserId={user.id} />
+    right: (projects) => {
+      const workingHours = calculateWorkingHours(tasksResult);
+      return (
+        <div>
+          <h1 className="font-semibold text-4xl w-fit mb-4">Проекты</h1>
 
-        {inProgressTasksResult.type === 'right' ? (
-          <TodayTasksWidget tasks={inProgressTasksResult.value} />
-        ) : (
-          <div className="text-red-600 mt-4 ml-2">Ошибка загрузки задач в работе</div>
-        )}
+          <DashboardStats
+            activeTasks={matchEither(inProgressTasksResult, {
+              left: () => 0,
+              right: (tasks) => tasks.length,
+            })}
+            projectsCount={projects.length}
+            workingHours={workingHours}
+          />
 
-        <TaskDrawer>
-          <ProjectTasksWidgetServer projectId={projectId} />
-        </TaskDrawer>
-      </>
-    ),
+          <ProjectSection projects={projects} currentUserId={user.id} />
+
+          {matchEither(inProgressTasksResult, {
+            left: () => (
+              <div className="text-red-600 mt-4 ml-2">Ошибка загрузки задач в работе</div>
+            ),
+            right: (tasks) => <TodayTasksWidget tasks={tasks} />,
+          })}
+
+          <TaskDrawer>
+            <ProjectTasksWidgetServer projectId={projectId} />
+          </TaskDrawer>
+        </div>
+      );
+    },
+  });
+}
+
+function calculateWorkingHours(tasksResult: Awaited<ReturnType<typeof getUserTasks>>): number {
+  return matchEither(tasksResult, {
+    left: () => 0,
+    right: (tasks) =>
+      tasks
+        .filter((task) => task.status === 'DONE' && typeof task.durationHours === 'number')
+        .reduce((sum, task) => sum + (task.durationHours ?? 0), 0),
   });
 }
 
@@ -68,57 +89,11 @@ function ProjectFetchError({ error }: { error: string }) {
   );
 }
 
-function DashboardStats({
-  projectsCount,
-  workingHours,
-}: {
-  projectsCount: number;
-  workingHours: number;
-}) {
-  return (
-    <>
-      <h1 className="font-semibold text-4xl w-fit mb-4">Проекты</h1>
-      <div className="flex flex-wrap xl:grid xl:grid-cols-3 gap-4 mb-4">
-        <section className="flex flex-col gap-4 items-stretch w-full max-w-full">
-          <Stats
-            title={pluralize(projectsCount, ['Проект', 'Проекта', 'Проектов'])}
-            stats={String(projectsCount)}
-            src="/project-stats-icons/active-projects.svg"
-            backgroundColor="bg-[var(--chart-1)]"
-          />
-          <Stats
-            title={pluralize(35, ['Задача', 'Задачи', 'Задач'])}
-            stats="35"
-            src="/project-stats-icons/ongoing-projects.svg"
-            backgroundColor="bg-[var(--chart-4)]"
-          />
-          <Stats
-            title={pluralize(workingHours, ['Рабочий час', 'Рабочих часа', 'Рабочих часов'])}
-            stats={String(workingHours)}
-            src="/project-stats-icons/working-hours.svg"
-            backgroundColor="bg-[var(--chart-3)]"
-          />
-        </section>
-        <section className="xl:col-span-2 min-h-105 w-full">
-          <ProjectsStatistic />
-        </section>
-      </div>
-    </>
-  );
-}
-
 function UserNotFound() {
   return (
-    <div className="flex flex-col items-center justify-center">
-      <h1>Ошибка: пользователь не найден</h1>
+    <div className="flex flex-col items-center justify-center mt-10">
+      <h1 className="text-2xl font-bold">Ошибка: пользователь не найден</h1>
+      <p className="text-gray-500 mt-2">Пожалуйста, войдите в систему заново.</p>
     </div>
   );
-}
-
-function calculateWorkingHours(tasksResult: Awaited<ReturnType<typeof getUserTasks>>): number {
-  if (tasksResult.type !== 'right') return 0;
-
-  return tasksResult.value
-    .filter((task) => task.status === 'DONE' && typeof task.durationHours === 'number')
-    .reduce((sum, task) => sum + (task.durationHours ?? 0), 0);
 }
