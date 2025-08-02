@@ -9,12 +9,11 @@ import {
 
 import { cookies } from 'next/headers';
 
-import { AppSidebar, AsidePanel, Header } from '@/widgets';
+import { AppSidebar, Header } from '@/widgets';
 import { getCurrentUser } from '@/entities/user/server';
 import { UserAccountClient } from '@/features/account/ui/user-account-client';
 import { getProjectsByUser } from '@/entities/project/server';
 import { matchEither } from '@/shared/lib/either';
-import { prisma } from '@/shared/lib/db';
 
 const SITE_NAME = 'Task Hub';
 
@@ -41,16 +40,9 @@ export default async function RootLayout({
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get('sidebar_state')?.value === 'true';
 
-  const allUsers = await prisma.user.findMany({
-    where: {
-      id: { not: user?.id },
-    },
-    select: { id: true, name: true },
-  });
-
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
-      <div className="flex h-screen w-full">
+      <div className="flex h-screen w-full overflow-x-hidden">
         <AppSidebar
           projects={projects}
           accountSlot={
@@ -66,13 +58,12 @@ export default async function RootLayout({
           }
         />
 
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full min-w-0">
           <Header />
-          <main className="p-4 grow" role="main">
+          <main className="grow min-w-0" role="main">
             {children}
           </main>
         </div>
-        <AsidePanel allUsers={allUsers} currentUserId={user?.id || ''} />
       </div>
     </SidebarProvider>
   );

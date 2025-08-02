@@ -1,7 +1,8 @@
 export const PATHNAMES = {
   HOME: '/',
   DASHBOARD: '/dashboard',
-  MESSAGE: '/message',
+  // MESSAGE: '/message',
+  MESSAGE: '/chat',
   INSIGHT: '/insight',
   TEAM: '/team',
   SCHEDULE: '/schedule',

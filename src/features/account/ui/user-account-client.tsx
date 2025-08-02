@@ -18,7 +18,7 @@ export function UserAccountClient({ email, login }: { email: string; login: stri
       <SelectContent>
         <form action={logout}>
           <Button className="w-full" type="submit">
-            Sign out
+            Выйти из аккаунта
           </Button>
         </form>
       </SelectContent>

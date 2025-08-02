@@ -1,19 +1,27 @@
-import { userRepository } from '@/entities/user/repositories/user';
 import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/shared/lib/db';
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const q = searchParams.get('q');
+export async function GET(req: NextRequest) {
+  const search = req.nextUrl.searchParams.get('q') || '';
 
-  if (!q || q.trim() === '') {
-    return NextResponse.json({ error: 'Query param "q" is required' }, { status: 400 });
+  if (search.trim().length === 0) {
+    return NextResponse.json([]);
   }
 
-  try {
-    const users = await userRepository.searchUsers(q);
-    return NextResponse.json(users);
-  } catch (error) {
-    console.log(error);
-    return NextResponse.json({ error: 'Server error' }, { status: 500 });
-  }
+  const users = await prisma.user.findMany({
+    where: {
+      name: {
+        contains: search,
+        mode: 'insensitive',
+      },
+    },
+    select: {
+      id: true,
+      name: true,
+      avatarUrl: true,
+    },
+    take: 10,
+  });
+
+  return NextResponse.json(users);
 }

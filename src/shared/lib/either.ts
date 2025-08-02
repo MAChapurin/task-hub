@@ -50,3 +50,17 @@ export const matchEither = <L, R, V>(
 
   return mathers.right(either.value);
 };
+
+export const matchEitherAsync = async <L, R, V>(
+  either: Either<L, R>,
+  matchers: {
+    left: (error: NoInfer<L>) => Promise<V> | V;
+    right: (value: NoInfer<R>) => Promise<V> | V;
+  }
+): Promise<V> => {
+  if (either.type === 'left') {
+    return matchers.left(either.error);
+  }
+
+  return matchers.right(either.value);
+};

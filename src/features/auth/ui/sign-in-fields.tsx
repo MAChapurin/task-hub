@@ -17,24 +17,24 @@ export function AuthFields({
   return (
     <>
       <div className="space-y-2">
-        <Label htmlFor={loginId}>Login</Label>
+        <Label htmlFor={loginId}>Логин</Label>
         <Input
           id={loginId}
           type="login"
           name="login"
-          placeholder="Enter your login"
+          placeholder="Введите ваш логин"
           required
           defaultValue={formData?.get('login')?.toString()}
         />
         {errors?.login && <div>{errors.login}</div>}
       </div>
       <div className="space-y-2">
-        <Label htmlFor={passwordId}>Password</Label>
+        <Label htmlFor={passwordId}>Пароль</Label>
         <Input
           id={passwordId}
           type="password"
           name="password"
-          placeholder="Enter your password"
+          placeholder="Введите ваш пароль"
           required
           defaultValue={formData?.get('password')?.toString()}
         />

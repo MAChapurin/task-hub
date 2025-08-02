@@ -21,7 +21,7 @@ model User {
   projectParticipants ProjectParticipant[]
   stats               UserProjectStat[]
   sentMessages        Message[]            @relation("SentMessages")
-  receivedMessages    Message[]            @relation("ReceivedMessages")
+  chatParticipants    ChatParticipant[]
 }
 
 model Project {
@@ -77,14 +77,38 @@ model UserProjectStat {
   @@unique([userId, date])
 }
 
+model Chat {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  participants ChatParticipant[]
+  messages     Message[]         @relation("ChatMessages")
+
+  lastMessageId String?  @unique
+  lastMessage   Message? @relation("LastChatMessage", fields: [lastMessageId], references: [id])
+}
+
+model ChatParticipant {
+  userId String
+  chatId String
+
+  user User @relation(fields: [userId], references: [id])
+  chat Chat @relation(fields: [chatId], references: [id])
+
+  @@id([userId, chatId])
+}
+
 model Message {
   id        String   @id @default(cuid())
   content   String
   createdAt DateTime @default(now())
 
-  senderId   String
-  receiverId String
+  senderId String
+  chatId   String
 
-  sender   User @relation("SentMessages", fields: [senderId], references: [id])
-  receiver User @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  sender User @relation("SentMessages", fields: [senderId], references: [id])
+  chat   Chat @relation("ChatMessages", fields: [chatId], references: [id])
+
+  chatAsLastMessage Chat? @relation("LastChatMessage")
 }

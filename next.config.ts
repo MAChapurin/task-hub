@@ -7,6 +7,9 @@ const nextConfig = {
       'http://192.168.1.81:3000',
     ],
   },
+  images: {
+    domains: ['github.com'],
+  },
 };
 
 module.exports = nextConfig;

@@ -11,7 +11,7 @@ export const HeaderMarketing = () => {
     <header className="w-screen fixed z-50 top-0 left-0 flex items-center justify-center backdrop-blur-md">
       <div className="w-full max-w-400 flex items-center justify-between p-2 md:p-4 gap-8">
         <Link className="flex items-center gap-2" href={PATHNAMES.HOME}>
-          <span className="sr-only">Home</span>
+          <span className="sr-only">Главная</span>
           <Grid3x3 /> TASKHUB
         </Link>
         <div className="hidden lg:block mr-auto">

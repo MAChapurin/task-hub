@@ -15,13 +15,13 @@ export function SignUpForm() {
 
   return (
     <AuthFormLayout
-      title="Sign Up"
-      description="Create your account to get started"
+      title="Регистрация"
+      description="Создайте свою учетную запись, чтобы начать"
       action={action}
       fields={<AuthFieldsRegister {...formState} />}
       actions={<SubmitButton isPending={isPending}>Sign Up</SubmitButton>}
       error={<ErrorMessage error={formState.errors?._errors} />}
-      link={<BottomLink text="Already have an account?" linkText="Sign in" url={PATHNAMES.LOGIN} />}
+      link={<BottomLink text="У вас уже есть аккаунт?" linkText="Вход" url={PATHNAMES.LOGIN} />}
     />
   );
 }

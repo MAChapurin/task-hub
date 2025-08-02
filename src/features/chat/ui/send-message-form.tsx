@@ -1,10 +1,7 @@
 'use client';
 
 import React, { useState, startTransition } from 'react';
-import { useActionState } from '@/shared/lib/react';
-import { sendMessageAction, SendMessageFormState } from '../action/send-message.action';
 import { Input } from '@/shared/ui/input';
-import { Button } from '@/shared/ui/button';
 
 interface SendMessageFormProps {
   receiverId: string;
@@ -12,11 +9,11 @@ interface SendMessageFormProps {
 
 export function SendMessageForm({ receiverId }: SendMessageFormProps) {
   const [content, setContent] = useState<string>('');
-  const [, dispatch, isPending] = useActionState<
-    SendMessageFormState,
-    SendMessageFormState,
-    FormData
-  >(sendMessageAction, {} as SendMessageFormState);
+  // const [, dispatch, isPending] = useActionState<
+  //   SendMessageFormState,
+  //   SendMessageFormState,
+  //   FormData
+  // >(sendMessageAction, {} as SendMessageFormState);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +24,7 @@ export function SendMessageForm({ receiverId }: SendMessageFormProps) {
     fd.set('content', content);
 
     startTransition(() => {
-      dispatch(fd);
+      // dispatch(fd);
     });
 
     setContent('');
@@ -39,11 +36,11 @@ export function SendMessageForm({ receiverId }: SendMessageFormProps) {
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder="Введите сообщение..."
-        disabled={isPending}
+        // disabled={isPending}
       />
-      <Button type="submit" disabled={isPending || !content.trim()}>
+      {/* <Button type="submit" disabled={isPending || !content.trim()}>
         Отправить
-      </Button>
+      </Button> */}
     </form>
   );
 }

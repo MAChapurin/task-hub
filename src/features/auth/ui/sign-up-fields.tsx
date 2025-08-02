@@ -26,7 +26,7 @@ export function AuthFieldsRegister({
   return (
     <>
       <div className="space-y-2">
-        <Label htmlFor={loginId}>Login</Label>
+        <Label htmlFor={loginId}>Логин</Label>
         <Input
           id={loginId}
           name="login"
@@ -37,7 +37,7 @@ export function AuthFieldsRegister({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor={emailId}>Email</Label>
+        <Label htmlFor={emailId}>Почта</Label>
         <Input
           id={emailId}
           type="email"
@@ -66,7 +66,7 @@ export function AuthFieldsRegister({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor={passwordId}>Password</Label>
+        <Label htmlFor={passwordId}>Пароль</Label>
         <Input
           id={passwordId}
           type="password"
@@ -78,7 +78,7 @@ export function AuthFieldsRegister({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor={confirmPasswordId}>Confirm Password</Label>
+        <Label htmlFor={confirmPasswordId}>Повторите пароль</Label>
         <Input
           id={confirmPasswordId}
           type="password"

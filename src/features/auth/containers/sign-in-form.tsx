@@ -14,14 +14,18 @@ export function SignInForm() {
 
   return (
     <AuthFormLayout
-      title="Sign In"
-      description="Welcome back! Please sign in to your account"
+      title="Вход"
+      description="Добро пожаловать! Пожалуйста, войдите в свою учётную запись."
       action={action}
       fields={<AuthFields {...formState} />}
-      actions={<SubmitButton isPending={isPending}> Sign In</SubmitButton>}
+      actions={<SubmitButton isPending={isPending}> Отправить</SubmitButton>}
       error={<ErrorMessage error={formState.errors?._errors} />}
       link={
-        <BottomLink text="Don't have an account?" linkText="Sign up" url={PATHNAMES.REGISTER} />
+        <BottomLink
+          text="У вас нет учетной записи?"
+          linkText="Регистрация"
+          url={PATHNAMES.REGISTER}
+        />
       }
     />
   );

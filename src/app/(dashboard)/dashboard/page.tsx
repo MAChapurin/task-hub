@@ -51,7 +51,7 @@ export default async function DashboardPage() {
   if (!projects) return <ProjectFetchError error="unknown-error" />;
 
   return (
-    <div>
+    <div className="p-4">
       <h1 className="font-semibold text-4xl w-fit mb-4">Проекты</h1>
       <DashboardStats
         activeTasks={inProgressTasks.length}
