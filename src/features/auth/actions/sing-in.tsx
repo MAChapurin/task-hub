@@ -1,10 +1,6 @@
 'use server';
 
 import { sessionService, verifyUserPassword } from '@/entities/user/server';
-import { PATHNAMES } from '@/shared/constants/pathnames';
-
-import { redirect } from 'next/navigation';
-
 import { z } from 'zod';
 
 export type SignInFormState = {
@@ -24,7 +20,7 @@ const formDataSchema = z.object({
 export const signInAction = async (
   _state: SignInFormState,
   formData: FormData
-): Promise<SignInFormState> => {
+): Promise<SignInFormState & { success?: boolean }> => {
   const data = Object.fromEntries(formData.entries());
   const result = formDataSchema.safeParse(data);
 
@@ -44,7 +40,11 @@ export const signInAction = async (
 
   if (verifyUserResult.type === 'right') {
     await sessionService.addSession(verifyUserResult.value);
-    redirect(PATHNAMES.DASHBOARD);
+    return {
+      formData,
+      errors: undefined,
+      success: true,
+    };
   }
 
   const errors = {

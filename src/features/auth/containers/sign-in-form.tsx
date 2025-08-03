@@ -8,9 +8,26 @@ import { ErrorMessage } from '../ui/submit-button copy';
 import { signInAction, SignInFormState } from '../actions/sing-in';
 import { useActionState } from '@/shared/lib/react';
 import { PATHNAMES } from '@/shared/constants/pathnames';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export function SignInForm() {
-  const [formState, action, isPending] = useActionState(signInAction, {} as SignInFormState);
+  const router = useRouter();
+  const [formState, action, isPending] = useActionState(
+    signInAction,
+    {} as SignInFormState,
+    undefined,
+    {
+      success: 'Добро пожаловать!',
+      error: 'Ошибка входа',
+    }
+  );
+
+  useEffect(() => {
+    if (formState.success && !isPending) {
+      router.push(PATHNAMES.DASHBOARD);
+    }
+  }, [formState.success, isPending, router]);
 
   return (
     <AuthFormLayout

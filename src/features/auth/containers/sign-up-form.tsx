@@ -9,9 +9,24 @@ import { useActionState } from '@/shared/lib/react';
 import { SignUnFormState, signUpAction } from '../actions/sign-up';
 import { PATHNAMES } from '@/shared/constants/pathnames';
 import { AuthFieldsRegister } from '../ui/sign-up-fields';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export function SignUpForm() {
-  const [formState, action, isPending] = useActionState(signUpAction, {} as SignUnFormState);
+  const router = useRouter();
+
+  const [formState, action, isPending] = useActionState(
+    signUpAction,
+    {} as SignUnFormState,
+    undefined,
+    { success: 'Добро пожаловать в TaskHub', error: 'Ошибка при регистрации' }
+  );
+
+  useEffect(() => {
+    if (formState.success && !isPending) {
+      router.push(PATHNAMES.DASHBOARD);
+    }
+  }, [formState.success, isPending, router]);
 
   return (
     <AuthFormLayout
@@ -19,7 +34,7 @@ export function SignUpForm() {
       description="Создайте свою учетную запись, чтобы начать"
       action={action}
       fields={<AuthFieldsRegister {...formState} />}
-      actions={<SubmitButton isPending={isPending}>Sign Up</SubmitButton>}
+      actions={<SubmitButton isPending={isPending}>Отправить</SubmitButton>}
       error={<ErrorMessage error={formState.errors?._errors} />}
       link={<BottomLink text="У вас уже есть аккаунт?" linkText="Вход" url={PATHNAMES.LOGIN} />}
     />
