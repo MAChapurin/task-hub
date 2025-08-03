@@ -1,3 +1,4 @@
+'use client';
 import { Card } from '@/shared/ui/card';
 import { cn } from '@/shared/lib/css';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/shared/ui/tooltip';
@@ -15,6 +16,7 @@ type Task = {
 };
 
 export const TodayTasksWidget = ({ tasks }: { tasks: Task[] }) => {
+  if (typeof window === 'undefined') return null;
   const now = new Date();
   const today = now.toDateString();
   const currentHour = now.getHours();

@@ -12,7 +12,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Cannot chat with yourself' }, { status: 400 });
     }
 
-    // Найдём существующий чат с этими двумя участниками (без других участников)
     const existingChat = await prisma.chat.findFirst({
       where: {
         participants: {
@@ -22,18 +21,6 @@ export async function POST(req: NextRequest) {
             },
           },
         },
-        AND: [
-          {
-            participants: {
-              some: { userId: currentUserId },
-            },
-          },
-          {
-            participants: {
-              some: { userId: otherUserId },
-            },
-          },
-        ],
       },
       include: {
         participants: true,
@@ -44,7 +31,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(existingChat);
     }
 
-    // Создаём новый чат
     const newChat = await prisma.chat.create({
       data: {
         participants: {

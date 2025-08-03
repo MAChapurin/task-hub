@@ -2,7 +2,7 @@ export const PATHNAMES = {
   HOME: '/',
   DASHBOARD: '/dashboard',
   // MESSAGE: '/message',
-  MESSAGE: '/chat',
+  MESSAGE: '/chats',
   INSIGHT: '/insight',
   TEAM: '/team',
   SCHEDULE: '/schedule',

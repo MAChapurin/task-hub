@@ -12,7 +12,7 @@ interface ChatRoomProps {
   currentUserId: string;
 }
 
-export default function ChatRoom({ chatId, currentUserId }: ChatRoomProps) {
+export function ChatRoom({ chatId, currentUserId }: ChatRoomProps) {
   const [messages, setMessages] = useState<MessagePayload[]>([]);
   const [input, setInput] = useState('');
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -68,36 +68,42 @@ export default function ChatRoom({ chatId, currentUserId }: ChatRoomProps) {
 
   return (
     <div className="flex flex-col h-full">
-      <ScrollArea className="flex-1 min-h-0 p-3 border rounded bg-muted text-sm">
-        {messages.map((msg) => {
-          const isOwn = msg.sender.id === currentUserId;
-          return (
-            <div
-              key={msg.id}
-              className={`mb-2 max-w-[70%] ${isOwn ? 'ml-auto text-right' : 'text-left'}`}
-            >
-              <div
-                className={`inline-block px-3 py-2 rounded-lg ${
-                  isOwn ? 'bg-blue-500 text-white' : 'bg-white text-black'
-                }`}
-              >
-                <div className="font-medium text-xs text-muted-foreground">{msg.sender.name}</div>
-                <div>{msg.content}</div>
-                <div className="text-xs text-muted-foreground mt-1">
-                  {new Date(msg.createdAt).toLocaleTimeString([], {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })}
+      <ScrollArea className="flex-1 min-h-0 p-4 border rounded bg-background text-sm">
+        <div className="flex flex-col gap-2">
+          {messages.map((msg) => {
+            const isOwn = msg.sender.id === currentUserId;
+            return (
+              <div key={msg.id} className={`flex ${isOwn ? 'justify-end' : 'justify-start'}`}>
+                <div
+                  className={`max-w-[75%] p-3 rounded-2xl relative break-words border ${
+                    isOwn
+                      ? 'bg-[--primary] text-[--primary-foreground] border-[--primary] rounded-br-none'
+                      : 'bg-[--secondary] text-[--secondary-foreground] border-[--border] rounded-bl-none'
+                  }`}
+                >
+                  {!isOwn && (
+                    <div className="text-xs font-medium text-[--muted-foreground] mb-1">
+                      {msg.sender.name}
+                    </div>
+                  )}
+                  <div>{msg.content}</div>
+                  <div className="text-xs text-[--muted-foreground] mt-1 text-right">
+                    {new Date(msg.createdAt).toLocaleTimeString([], {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-        <div ref={bottomRef} />
+            );
+          })}
+          <div ref={bottomRef} />
+        </div>
       </ScrollArea>
-      <div className="flex">
+
+      <div className="flex gap-2 mt-2">
         <Input
-          className="border-0"
+          className="border border-[--input] bg-white"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Напиши сообщение..."
@@ -105,8 +111,8 @@ export default function ChatRoom({ chatId, currentUserId }: ChatRoomProps) {
             if (e.key === 'Enter') sendMessage();
           }}
         />
-        <Button onClick={sendMessage} disabled={!input.trim()}>
-          <SendHorizontal />
+        <Button onClick={sendMessage} disabled={!input.trim()} className="shrink-0">
+          <SendHorizontal size={18} />
         </Button>
       </div>
     </div>

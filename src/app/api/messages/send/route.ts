@@ -23,6 +23,11 @@ export async function POST(request: Request) {
       },
     });
 
+    await prisma.chat.update({
+      where: { id: chatId },
+      data: { lastMessageId: message.id },
+    });
+
     const channel = `chat:${chatId}:messages`;
     await redisPub.publish(channel, JSON.stringify(message));
 
