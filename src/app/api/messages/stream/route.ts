@@ -12,27 +12,34 @@ export async function GET(request: Request) {
     async start(controller) {
       const channel = `chat:${chatId}:messages`;
 
-      const onMessage = (channelName: string, message: string) => {
-        if (channelName === channel) {
-          controller.enqueue(encoder.encode(`data: ${message}\n\n`));
-        }
-      };
+      try {
+        await redisSub.subscribe(channel);
+        console.log(`Subscribed to ${channel}`);
 
-      await redisSub.subscribe(channel);
-      redisSub.on('message', onMessage);
+        const onMessage = (channelName: string, message: string) => {
+          if (channelName === channel) {
+            controller.enqueue(encoder.encode(`data: ${message}\n\n`));
+          }
+        };
 
-      const heartbeat = setInterval(() => {
-        controller.enqueue(encoder.encode(':\n\n'));
-      }, 15000);
+        redisSub.on('message', onMessage);
+        const heartbeat = setInterval(() => {
+          controller.enqueue(encoder.encode(':\n\n'));
+        }, 15000);
 
-      const close = () => {
-        clearInterval(heartbeat);
-        redisSub.off('message', onMessage);
-        redisSub.unsubscribe(channel);
+        const close = () => {
+          clearInterval(heartbeat);
+          redisSub.off('message', onMessage);
+          redisSub.unsubscribe(channel);
+          controller.close();
+        };
+
+        request.signal.addEventListener('abort', close);
+      } catch (error) {
+        console.error('Error while subscribing to Redis channel:', error);
+        controller.enqueue(encoder.encode('data: {"error": "Server error"}\n\n'));
         controller.close();
-      };
-
-      request.signal.addEventListener('abort', close);
+      }
     },
   });
 
