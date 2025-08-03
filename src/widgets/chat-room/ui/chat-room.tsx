@@ -6,13 +6,19 @@ import { ScrollArea } from '@/shared/ui/scroll-area';
 import { Input } from '@/shared/ui/input';
 import { Button } from '@/shared/ui/button';
 import { SendHorizontal } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 
 interface ChatRoomProps {
   chatId: string;
   currentUserId: string;
+  companion: {
+    id: string;
+    name: string;
+    avatarUrl: string | null;
+  } | null;
 }
 
-export function ChatRoom({ chatId, currentUserId }: ChatRoomProps) {
+export function ChatRoom({ chatId, currentUserId, companion }: ChatRoomProps) {
   const [messages, setMessages] = useState<MessagePayload[]>([]);
   const [input, setInput] = useState('');
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -68,6 +74,19 @@ export function ChatRoom({ chatId, currentUserId }: ChatRoomProps) {
 
   return (
     <div className="flex flex-col h-full">
+      <div className="h-16 p-4 text-lg font-semibold border-b border-sidebar-border select-none">
+        {companion && (
+          <div className="flex items-center gap-2">
+            <Avatar>
+              <AvatarImage src={companion.avatarUrl || undefined} />
+              <AvatarFallback>{companion?.name[0]}</AvatarFallback>
+            </Avatar>
+            <div className="flex flex-col gap-1">
+              <span className="text-sm">{companion.name}</span>
+            </div>
+          </div>
+        )}
+      </div>
       <ScrollArea className="flex-1 min-h-0 p-4 border rounded bg-background text-sm">
         <div className="flex flex-col gap-2">
           {messages.map((msg) => {

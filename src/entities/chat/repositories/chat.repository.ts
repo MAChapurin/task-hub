@@ -70,4 +70,24 @@ export const chatRepository = {
     });
     return existingChat;
   },
+
+  getChatById: async (chatId: string) => {
+    const chat = await prisma.chat.findUnique({
+      where: { id: chatId },
+      include: {
+        participants: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                avatarUrl: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    return chat;
+  },
 };

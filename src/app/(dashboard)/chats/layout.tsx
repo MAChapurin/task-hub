@@ -11,7 +11,7 @@ export default async function ChatsLayout({ children }: PropsWithChildren) {
   return (
     <div className="flex  h-[calc(100vh-68px)]">
       <div className="flex-1">{children}</div>
-      <ChatListSidebar chats={chats} currentUserId={currentUserId} activeChatId={null} />
+      <ChatListSidebar chatList={chats} currentUserId={currentUserId} selectedChatId={null} />
     </div>
   );
 }

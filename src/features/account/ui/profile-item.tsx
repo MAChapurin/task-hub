@@ -19,8 +19,8 @@ export function ProfileItem({
         <AvatarFallback>{fallback}</AvatarFallback>
       </Avatar>
       <div className="flex flex-col gap-1">
-        <span className="text-sm text-gray-600">{name}</span>
-        <a className="text-xs text-gray-500" href={`mailto:${mail}`}>
+        <span className="text-sm">{name}</span>
+        <a className="text-xs" href={`mailto:${mail}`}>
           {mail}
         </a>
       </div>
