@@ -1,4 +1,4 @@
-export interface ChatSummary {
+export interface ChatEntity {
   id: string;
   participants: {
     id: string;

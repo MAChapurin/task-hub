@@ -103,7 +103,7 @@ export function ChatRoom({ chatId, currentUserId }: ChatRoomProps) {
 
       <div className="flex gap-2 mt-2">
         <Input
-          className="border border-[--input] bg-white"
+          className="border border-input bg-background"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Напиши сообщение..."

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/shared/lib/db';
+import { createNewChat, getExistingChat } from '@/entities/chat/server';
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,37 +12,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Cannot chat with yourself' }, { status: 400 });
     }
 
-    const existingChat = await prisma.chat.findFirst({
-      where: {
-        participants: {
-          every: {
-            userId: {
-              in: [currentUserId, otherUserId],
-            },
-          },
-        },
-      },
-      include: {
-        participants: true,
-      },
-    });
+    const existingChat = await getExistingChat(currentUserId, otherUserId);
 
     if (existingChat) {
       return NextResponse.json(existingChat);
     }
 
-    const newChat = await prisma.chat.create({
-      data: {
-        participants: {
-          createMany: {
-            data: [{ userId: currentUserId }, { userId: otherUserId }],
-          },
-        },
-      },
-      include: {
-        participants: true,
-      },
-    });
+    const newChat = await createNewChat(currentUserId, otherUserId);
 
     return NextResponse.json(newChat);
   } catch (error) {

@@ -2,15 +2,15 @@ import { ScrollArea } from '@/shared/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 import { formatDistanceToNow } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import { ChatSummary } from '@/shared/types/chat';
 import Link from 'next/link';
+import { ChatEntity } from '@/entities/chat/domain';
 
 export function ChatListSidebar({
   chats,
   currentUserId,
   activeChatId,
 }: {
-  chats: ChatSummary[];
+  chats: ChatEntity[];
   currentUserId: string;
   activeChatId: string | null;
 }) {
@@ -23,7 +23,6 @@ export function ChatListSidebar({
       <ScrollArea className="flex-1 min-h-0">
         <div className="divide-y divide-[var(--sidebar-border)]">
           {chats.map((chat) => {
-            console.log('chat => ', chat);
             const other = chat.participants.find((u) => u.id !== currentUserId);
             const lastMsg = chat.lastMessage;
             const isActive = activeChatId === chat.id;
