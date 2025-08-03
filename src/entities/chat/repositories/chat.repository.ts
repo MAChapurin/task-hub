@@ -36,6 +36,7 @@ export const chatRepository = {
     });
     return chats;
   },
+
   createChat: async (currentUserId: string, otherUserId: string) => {
     const newChat = await prisma.chat.create({
       data: {
@@ -51,6 +52,7 @@ export const chatRepository = {
     });
     return newChat;
   },
+
   existingChat: async (currentUserId: string, otherUserId: string) => {
     const existingChat = await prisma.chat.findFirst({
       where: {

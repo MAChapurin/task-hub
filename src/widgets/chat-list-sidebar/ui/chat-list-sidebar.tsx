@@ -4,6 +4,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import Link from 'next/link';
 import { ChatEntity } from '@/entities/chat/domain';
+import { UserSearchBox } from '@/features/users-search-box/ui/users-search-box';
 
 export function ChatListSidebar({
   chats,
@@ -19,6 +20,8 @@ export function ChatListSidebar({
       <div className="p-4 text-lg font-semibold border-b border-[var(--sidebar-border)] select-none">
         Чаты
       </div>
+
+      <UserSearchBox currentUserId={currentUserId} />
 
       <ScrollArea className="flex-1 min-h-0">
         <div className="divide-y divide-[var(--sidebar-border)]">

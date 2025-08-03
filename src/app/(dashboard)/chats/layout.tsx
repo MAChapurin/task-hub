@@ -1,6 +1,6 @@
 import { sessionService } from '@/entities/user/server';
-import { ChatListSidebar } from '@/widgets/chat-list-sidebar';
 import { getUserChatsById } from '@/entities/chat/services/get-user-chats-by-id';
+import { ChatListSidebar } from '@/widgets/chat-list-sidebar';
 import { PropsWithChildren } from 'react';
 
 export default async function ChatsLayout({ children }: PropsWithChildren) {
