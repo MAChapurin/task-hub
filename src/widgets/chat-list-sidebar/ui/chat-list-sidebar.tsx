@@ -2,14 +2,13 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { formatDistanceToNow } from 'date-fns';
-import { ru } from 'date-fns/locale';
 
 import { ScrollArea } from '@/shared/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 import { UserSearchBox } from '@/features/users-search-box/ui/users-search-box';
 import { ChatEntity } from '@/entities/chat/domain';
 import { useChatSidebarSubscription } from '../hooks/useChatSidebarSubscription';
+import { TimeAgo } from './time-ago';
 
 interface ChatListSidebarProps {
   chatList: ChatEntity[];
@@ -79,22 +78,12 @@ export function ChatListSidebar({ chatList, currentUserId, selectedChatId }: Cha
                       <h4 className="text-sm font-medium truncate m-0" title={companion?.name}>
                         {companion?.name}
                       </h4>
-                      {lastMessage?.createdAt && (
-                        <span
-                          className="text-xs text-[var(--sidebar-accent-foreground)] whitespace-nowrap ml-2"
-                          title={new Date(lastMessage.createdAt).toLocaleString()}
-                        >
-                          {formatDistanceToNow(new Date(lastMessage.createdAt), {
-                            addSuffix: true,
-                            locale: ru,
-                          })}
-                        </span>
-                      )}
+                      {lastMessage?.createdAt && <TimeAgo date={new Date(lastMessage.createdAt)} />}
                     </div>
 
                     <p
                       className="text-xs truncate mt-1 mb-0 text-[var(--muted-foreground)]"
-                      title={lastMessage?.content}
+                      title={lastMessage?.content ?? ''}
                     >
                       {lastMessage?.content ?? 'Нет сообщений'}
                     </p>
