@@ -10,3 +10,14 @@ export interface IUser {
   avatarUrl?: string;
   email?: string;
 }
+
+export interface MessagePayload {
+  id: string;
+  content: string;
+  createdAt: string;
+  chatId: string;
+  sender: {
+    id: string;
+    name: string;
+  };
+}

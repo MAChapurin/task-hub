@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { MessagePayload } from '@/shared/types/socket-events';
 import { ScrollArea } from '@/shared/ui/scroll-area';
 import { Input } from '@/shared/ui/input';
 import { Button } from '@/shared/ui/button';
 import { SendHorizontal } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
+import { MessagePayload } from '@/shared/types';
 
 interface ChatRoomProps {
   chatId: string;

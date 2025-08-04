@@ -1,7 +1,6 @@
-// app/api/messages/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/shared/lib/db';
-import { MessagePayload } from '@/shared/types/socket-events';
+import { MessagePayload } from '@/shared/types';
 
 export async function GET(req: NextRequest) {
   try {
@@ -12,7 +11,6 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'chatId is required' }, { status: 400 });
     }
 
-    // Получаем сообщения чата, сортируем по дате создания
     const messages = await prisma.message.findMany({
       where: { chatId },
       orderBy: { createdAt: 'asc' },
@@ -26,7 +24,6 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    // Преобразуем сообщения в формат MessagePayload
     const response: MessagePayload[] = messages.map((msg) => ({
       id: msg.id,
       content: msg.content,
