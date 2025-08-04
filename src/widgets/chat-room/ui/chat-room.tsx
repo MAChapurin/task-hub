@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Ably from 'ably';
 import { ScrollArea } from '@/shared/ui/scroll-area';
 import { Input } from '@/shared/ui/input';
 import { Button } from '@/shared/ui/button';
@@ -32,24 +33,26 @@ export function ChatRoom({ chatId, currentUserId, companion }: ChatRoomProps) {
       .then((res) => res.json())
       .then((data: MessagePayload[]) => setMessages(data))
       .catch(console.error);
+  }, [chatId]);
 
-    const evtSource = new EventSource(`/api/messages/stream?chatId=${chatId}`);
+  useEffect(() => {
+    const ably = new Ably.Realtime({ key: process.env.NEXT_PUBLIC_ABLY_KEY! });
+    const channel = ably.channels.get(`chat:${chatId}`);
 
-    evtSource.onmessage = (event) => {
-      const message: MessagePayload = JSON.parse(event.data);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handler = (msg: any) => {
+      const message = msg.data as MessagePayload;
       setMessages((prev) => {
         if (prev.some((m) => m.id === message.id)) return prev;
         return [...prev, message];
       });
     };
 
-    evtSource.onerror = (err) => {
-      console.error('SSE error:', err);
-      evtSource.close();
-    };
+    channel.subscribe('new-message', handler);
 
     return () => {
-      evtSource.close();
+      channel.unsubscribe('new-message', handler);
+      ably.close();
     };
   }, [chatId]);
 
@@ -87,6 +90,7 @@ export function ChatRoom({ chatId, currentUserId, companion }: ChatRoomProps) {
           </div>
         )}
       </div>
+
       <ScrollArea className="flex-1 min-h-0 p-4 border rounded bg-background text-sm">
         <div className="flex flex-col gap-2">
           {messages.map((msg) => {

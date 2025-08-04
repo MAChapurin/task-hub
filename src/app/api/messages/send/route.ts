@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/shared/lib/db';
-import { redisPub } from '@/shared/lib/redis';
+import Ably from 'ably';
+
+const ably = new Ably.Realtime(process.env.ABLY_API_KEY!);
 
 export async function POST(request: Request) {
   try {
@@ -28,8 +30,8 @@ export async function POST(request: Request) {
       data: { lastMessageId: message.id },
     });
 
-    const channel = `chat:${chatId}:messages`;
-    await redisPub.publish(channel, JSON.stringify(message));
+    const channel = ably.channels.get(`chat:${chatId}`);
+    await channel.publish('new-message', message);
 
     return NextResponse.json(message);
   } catch (error) {
