@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Ably from 'ably';
+import { ably } from '@/shared/lib/ably'; // ← вот тут
 import { ScrollArea } from '@/shared/ui/scroll-area';
 import { Input } from '@/shared/ui/input';
 import { Button } from '@/shared/ui/button';
@@ -36,12 +36,11 @@ export function ChatRoom({ chatId, currentUserId, companion }: ChatRoomProps) {
   }, [chatId]);
 
   useEffect(() => {
-    const ably = new Ably.Realtime({ key: process.env.NEXT_PUBLIC_ABLY_KEY! });
     const channel = ably.channels.get(`chat:${chatId}`);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handler = (msg: any) => {
-      const message = msg.data as MessagePayload;
+    const handler = (msg: unknown) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const message = (msg as any).data as MessagePayload;
       setMessages((prev) => {
         if (prev.some((m) => m.id === message.id)) return prev;
         return [...prev, message];
@@ -52,7 +51,6 @@ export function ChatRoom({ chatId, currentUserId, companion }: ChatRoomProps) {
 
     return () => {
       channel.unsubscribe('new-message', handler);
-      ably.close();
     };
   }, [chatId]);
 

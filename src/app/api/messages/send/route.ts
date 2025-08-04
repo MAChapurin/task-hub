@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/shared/lib/db';
-import Ably from 'ably';
-
-const ably = new Ably.Realtime(process.env.ABLY_API_KEY!);
+import { ably } from '@/shared/lib/ably';
 
 export async function POST(request: Request) {
   try {
@@ -31,11 +29,11 @@ export async function POST(request: Request) {
     });
 
     const channel = ably.channels.get(`chat:${chatId}`);
-    await channel.publish('new-message', message);
+    channel.publish('new-message', message);
 
     return NextResponse.json(message);
   } catch (error) {
-    console.error(error);
+    console.error('Send message error:', error);
     return NextResponse.json({ error: 'Failed to send message' }, { status: 500 });
   }
 }
